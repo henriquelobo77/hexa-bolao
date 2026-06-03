@@ -85,6 +85,7 @@ create table if not exists members (
   id uuid primary key default uuid_generate_v4(),
   bolao_id uuid not null references bolao(id) on delete cascade,
   nickname text not null,
+  pin_hash text,
   created_at timestamptz not null default now(),
   last_seen_at timestamptz not null default now(),
   unique (bolao_id, nickname)

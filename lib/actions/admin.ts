@@ -391,3 +391,21 @@ export async function adminRemoveMember(formData: FormData) {
   revalidatePath("/", "layout");
   return { ok: true };
 }
+
+// ============================================================
+// Resetar PIN de um membro (quando esquece)
+// ============================================================
+
+export async function adminResetMemberPin(formData: FormData) {
+  await ensureAdmin();
+  const memberId = String(formData.get("member_id") ?? "");
+  if (!memberId) return { ok: false, error: "ID ausente." };
+  const admin = supabaseAdmin();
+  const { error } = await admin.rpc("admin_reset_member_pin", { p_member_id: memberId });
+  if (error) {
+    console.error("[adminResetMemberPin]", error);
+    return { ok: false, error: "Falha ao resetar." };
+  }
+  revalidatePath("/", "layout");
+  return { ok: true };
+}

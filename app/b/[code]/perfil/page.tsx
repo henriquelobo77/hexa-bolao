@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getBolaoByCodeOrSlug, getRanking, getPredictionsForMember } from "@/lib/queries";
 import { getCurrentMember } from "@/lib/actions/member";
 import { PerfilForm } from "@/components/perfil-form";
+import { ChangePinForm } from "@/components/change-pin-form";
 import { LeaveButton } from "@/components/leave-button";
 import { fmtDateTime } from "@/lib/date";
 
@@ -68,6 +69,13 @@ export default async function PerfilPage({ params }: Props) {
           Trocar apelido
         </div>
         <PerfilForm initialNick={member.nickname} />
+      </section>
+
+      <section>
+        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule mb-3">
+          Trocar PIN
+        </div>
+        <ChangePinForm />
       </section>
 
       <section>

@@ -47,6 +47,7 @@ type MemberRow = {
   id: string;
   bolao_id: string;
   nickname: string;
+  pin_hash: string | null;
   created_at: string;
   last_seen_at: string;
 };
@@ -173,7 +174,24 @@ export interface Database {
         Relationships: Rel;
       };
     };
-    Functions: Record<string, never>;
+    Functions: {
+      create_member_with_pin: {
+        Args: { p_bolao_id: string; p_nickname: string; p_pin: string };
+        Returns: string;
+      };
+      auth_member: {
+        Args: { p_bolao_id: string; p_nickname: string; p_pin: string };
+        Returns: string | null;
+      };
+      set_member_pin: {
+        Args: { p_member_id: string; p_new_pin: string };
+        Returns: void;
+      };
+      admin_reset_member_pin: {
+        Args: { p_member_id: string };
+        Returns: void;
+      };
+    };
     Enums: {
       match_phase: MatchPhase;
       match_status: MatchStatus;

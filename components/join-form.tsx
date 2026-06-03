@@ -22,7 +22,6 @@ export function JoinForm({ presetCode = "HEXA2026" }: JoinFormProps) {
 
   useEffect(() => {
     if (state?.ok) {
-      // Redireciona pro bolão usando o slug (que = join_code uppercase no nosso seed)
       router.push(`/b/${state.bolaoSlug}`);
       router.refresh();
     }
@@ -66,6 +65,32 @@ export function JoinForm({ presetCode = "HEXA2026" }: JoinFormProps) {
           placeholder="Como a galera te conhece"
           className="w-full bg-graphite border border-rule px-4 py-4 text-bone text-lg focus:border-acid focus:outline-none transition-colors placeholder:text-bone-faint"
         />
+      </div>
+
+      <div>
+        <label
+          htmlFor="pin"
+          className="block text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted mb-2"
+        >
+          Seu PIN
+        </label>
+        <input
+          id="pin"
+          name="pin"
+          type="password"
+          inputMode="numeric"
+          pattern="\d{4,6}"
+          minLength={4}
+          maxLength={6}
+          required
+          autoComplete="off"
+          placeholder="4 a 6 dígitos"
+          className="w-full bg-graphite border border-rule px-4 py-4 text-bone font-mono text-lg tracking-[0.5em] focus:border-acid focus:outline-none transition-colors placeholder:text-bone-faint placeholder:tracking-normal"
+        />
+        <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-bone-faint mt-2 leading-tight">
+          ↳ 1ª vez? você cria agora.<br />
+          já participa? digita o mesmo de antes.
+        </p>
       </div>
 
       {state && !state.ok && (

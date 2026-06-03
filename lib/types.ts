@@ -47,6 +47,7 @@ export interface Member {
   id: string;
   bolao_id: string;
   nickname: string;
+  pin_hash: string | null;
   created_at: string;
   last_seen_at: string;
 }
