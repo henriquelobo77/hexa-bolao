@@ -1,65 +1,71 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import { getCurrentMember } from "@/lib/actions/member";
+import { supabaseServer } from "@/lib/supabase";
+import { JoinForm } from "@/components/join-form";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+interface HomeProps {
+  searchParams: Promise<{ c?: string }>;
+}
+
+export default async function HomePage({ searchParams }: HomeProps) {
+  // Se já tem cookie de membro, manda direto pro bolão
+  const member = await getCurrentMember();
+  if (member) {
+    const supabase = await supabaseServer();
+    const { data } = await supabase
+      .from("bolao")
+      .select("join_code")
+      .eq("id", member.bolao_id)
+      .maybeSingle<{ join_code: string }>();
+    if (data) redirect(`/b/${data.join_code}`);
+  }
+
+  // Se veio com ?c=CODIGO via link de convite, pré-preenche
+  const sp = await searchParams;
+  const presetCode = sp?.c?.toUpperCase().slice(0, 32) ?? "";
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="relative min-h-dvh flex flex-col">
+      {/* Top bar */}
+      <header className="hexa-container flex items-center justify-between pt-6 pb-4 text-[10px] font-mono uppercase tracking-[0.18em] text-bone-muted">
+        <span className="text-bone font-semibold tracking-[0.22em]">HEXA</span>
+        <span className="flex items-center gap-2">
+          <span className="hexa-pulse inline-block w-1.5 h-1.5 rounded-full bg-acid" />
+          Copa 2026
+        </span>
+      </header>
+
+      {/* Hero */}
+      <section className="hexa-container flex-1 flex flex-col justify-center py-12 md:py-20">
+        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted mb-5">
+          ↳ Etapa 01 · Entrar no bolão
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <h1 className="font-display text-[clamp(72px,18vw,180px)] leading-[0.85] tracking-tight">
+          HE<span className="text-acid">X</span>A
+        </h1>
+
+        <p className="mt-6 max-w-md text-bone-muted text-base md:text-lg leading-snug">
+          Bolão da Copa do Mundo 2026.
+          <br />
+          Digite o código do seu grupo e seu apelido pra entrar.
+        </p>
+
+        <div className="mt-12 max-w-md">
+          <JoinForm presetCode={presetCode} />
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="hexa-container py-8 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.18em] text-bone-muted border-t border-rule">
+        <span>v1.0 · 11 jun 2026</span>
+        <Link href="/admin" className="hover:text-bone transition-colors">
+          Admin →
+        </Link>
+      </footer>
+    </main>
   );
 }

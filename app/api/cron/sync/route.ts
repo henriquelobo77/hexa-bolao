@@ -1,0 +1,78 @@
+// ============================================================
+// HEXA · Cron endpoint
+// ------------------------------------------------------------
+// Disparado pelo Vercel Cron (vercel.json) num intervalo regular
+// pra puxar resultados da football-data.org.
+//
+// Auth: Vercel envia `Authorization: Bearer ${CRON_SECRET}`.
+// ============================================================
+
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase";
+import { fetchAllMatches, mapMatches, FootballApiError } from "@/lib/football-api";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export async function GET(request: Request) {
+  // Verifica autorização (Vercel manda o secret automaticamente)
+  const auth = request.headers.get("authorization");
+  const expected = `Bearer ${process.env.CRON_SECRET ?? ""}`;
+  if (!process.env.CRON_SECRET || auth !== expected) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const token = process.env.FOOTBALL_DATA_TOKEN;
+  if (!token) {
+    return NextResponse.json(
+      { ok: false, error: "FOOTBALL_DATA_TOKEN ausente" },
+      { status: 500 }
+    );
+  }
+
+  const supabase = supabaseAdmin();
+  const { data: bolao } = await supabase
+    .from("bolao")
+    .select("id")
+    .limit(1)
+    .maybeSingle<{ id: string }>();
+  if (!bolao) {
+    return NextResponse.json({ ok: false, error: "Nenhum bolão" }, { status: 404 });
+  }
+
+  try {
+    const apiMatches = await fetchAllMatches(token);
+    const mapped = mapMatches(apiMatches);
+    const rows = mapped.map((m) => ({ ...m, bolao_id: bolao.id }));
+
+    const BATCH = 50;
+    for (let i = 0; i < rows.length; i += BATCH) {
+      const batch = rows.slice(i, i + BATCH);
+      const { error } = await supabase
+        .from("matches")
+        .upsert(batch, { onConflict: "bolao_id,external_id" });
+      if (error) {
+        return NextResponse.json(
+          { ok: false, error: error.message },
+          { status: 500 }
+        );
+      }
+    }
+
+    return NextResponse.json({
+      ok: true,
+      processed: rows.length,
+      finished: mapped.filter((m) => m.status === "finished").length,
+      live: mapped.filter((m) => m.status === "live").length,
+      at: new Date().toISOString(),
+    });
+  } catch (e) {
+    const msg =
+      e instanceof FootballApiError
+        ? `API ${e.status ?? ""}: ${e.message}`
+        : e instanceof Error
+        ? e.message
+        : "Erro desconhecido";
+    return NextResponse.json({ ok: false, error: msg }, { status: 502 });
+  }
+}

@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identidade Visual — Bolão Copa 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Anton&family=Newsreader:opsz,wght@6..72,300..800&family=Big+Shoulders+Display:wght@300..900&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BASE / PAGE CHROME
+   ============================================================ */
+:root {
+  --page-bg: #FAFAF8;
+  --page-ink: #111110;
+  --page-meta: rgba(17,17,16,0.55);
+  --page-rule: rgba(17,17,16,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page-bg);
+  color: var(--page-ink);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; }
+
+/* Sticky doc nav */
+.doc-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(250,250,248,0.82);
+  backdrop-filter: saturate(140%) blur(20px);
+  -webkit-backdrop-filter: saturate(140%) blur(20px);
+  border-bottom: 1px solid var(--page-rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.doc-nav-left { display: flex; gap: 28px; align-items: center; }
+.doc-nav-left a { color: var(--page-meta); text-decoration: none; transition: color 0.2s; }
+.doc-nav-left a:hover { color: var(--page-ink); }
+.doc-nav-left .crumb { color: var(--page-ink); font-weight: 600; letter-spacing: 0.14em; }
+.doc-nav-right { color: var(--page-meta); display: flex; gap: 18px; }
+.doc-nav-right .live { color: #E14816; }
+.doc-nav-right .live::before { content:"●"; margin-right: 6px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+/* ============================================================
+   COVER
+   ============================================================ */
+.cover {
+  padding: 96px 40px 96px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.cover-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--page-meta);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cover-label .dot { width: 6px; height: 6px; background: #E14816; border-radius: 50%; }
+.cover-title {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin-bottom: 32px;
+  max-width: 14ch;
+}
+.cover-title em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 300;
+  color: #E14816;
+}
+.cover-lede {
+  font-family: 'Newsreader', serif;
+  font-size: 21px;
+  line-height: 1.48;
+  max-width: 58ch;
+  color: rgba(17,17,16,0.78);
+  margin-bottom: 72px;
+}
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--page-rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cover-meta dt { color: var(--page-meta); margin-bottom: 8px; }
+.cover-meta dd { color: var(--page-ink); font-weight: 600; }
+
+/* ============================================================
+   SECTION HEADERS (shared)
+   ============================================================ */
+.section-head {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--rule, var(--page-rule));
+  margin-bottom: 64px;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-muted, var(--page-meta));
+  letter-spacing: 0.12em;
+  padding-top: 16px;
+}
+.section-title-block .section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted, var(--page-meta));
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: "opsz" 144, "wght" 400;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+.section-deck {
+  font-family: 'Newsreader', serif;
+  font-size: 18px;
+  color: rgba(17,17,16,0.7);
+  max-width: 52ch;
+}
+
+/* ============================================================
+   NAMES SECTION
+   ============================================================ */
+.names {
+  padding: 80px 40px 120px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.names-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--page-rule);
+  border: 1px solid var(--page-rule);
+}
+.name-card {
+  padding: 36px 24px 28px;
+  background: var(--page-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 340px;
+  position: relative;
+  transition: background 0.25s;
+}
+.name-card:hover { background: #F3EFE3; }
+.name-card .nc-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--page-meta);
+  letter-spacing: 0.1em;
+}
+.name-mark {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(44px, 4.2vw, 56px);
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+.name-pron {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--page-meta);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+.name-rationale {
+  font-family: 'Newsreader', serif;
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(17,17,16,0.78);
+  margin-top: auto;
+}
+.name-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #E14816;
+  padding-top: 12px;
+  border-top: 1px solid var(--page-rule);
+}
+
+/* ============================================================
+   DIRECTION SHELL (shared)
+   ============================================================ */
+.direction {
+  padding: 120px 40px 140px;
+  position: relative;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--bg);
+}
+.direction-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.direction-marker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 40px;
+}
+.direction-marker .bar { width: 32px; height: 1px; background: var(--ink-muted); }
+
+/* HERO */
+.dir-hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 80px;
+  align-items: end;
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 96px;
+}
+.dir-hero .pitch {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+.dir-hero .pitch p + p { margin-top: 14px; }
+.dir-hero .pitch strong { color: var(--ink); font-weight: 600; }
+.dir-hero .philosophy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Sub-section (palette, type, components) */
+.subsec { margin-bottom: 96px; }
+.subsec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 36px;
+}
+.subsec-head .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.12em;
+  width: 32px;
+}
+.subsec-head .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+}
+.subsec-head .rule { flex: 1; height: 1px; background: var(--rule); }
+
+/* Palette */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.swatch {
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+.swatch .role { opacity: 0.7; }
+.swatch .name { font-weight: 700; font-size: 14px; letter-spacing: 0.04em; }
+.swatch .hex { opacity: 0.65; font-size: 10.5px; }
+.swatch .meta-bottom { display: flex; justify-content: space-between; align-items: end; }
+.swatch.dark { color: rgba(250,250,248,0.92); }
+.swatch.dark .role { color: rgba(250,250,248,0.65); }
+.swatch.dark .hex { color: rgba(250,250,248,0.65); }
+.swatch.light { color: var(--ink); }
+.swatch.light .role { color: var(--ink-muted); }
+.swatch.light .hex { color: var(--ink-muted); }
+
+/* Type stack */
+.type-stack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.type-block {
+  padding: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 280px;
+}
+.type-block .meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.type-block .sample {
+  line-height: 0.9;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.type-block .specimen {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
+
+/* Components */
+.comp-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+}
+.comp {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 220px;
+  position: relative;
+}
+.comp-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+}
+.comp-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comp.span-4 { grid-column: span 4; }
+.comp.span-6 { grid-column: span 6; }
+.comp.span-12 { grid-column: span 12; }
+
+/* ============================================================
+   DIRECTION 01 — PRESS (TABELA)
+   ============================================================ */
+.dir-press {
+  --ink: #11110D;
+  --ink-muted: rgba(17,17,13,0.62);
+  --bg: #F0E9D6;
+  --bg-card: #EBE3CB;
+  --bg-deep: #E5DCBF;
+  --accent: #E14816;
+  --accent-soft: #F6B89E;
+  --campo: #18372A;
+  --rule: rgba(17,17,13,0.20);
+  --font-display: 'Fraunces', serif;
+  --font-condensed: 'Anton', sans-serif;
+  --font-body: 'Newsreader', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+.dir-press::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PRESS hero wordmark */
+.press-mark {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 360;
+  font-size: clamp(140px, 19vw, 280px);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  margin-bottom: 12px;
+}
+.press-mark em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 280;
+  color: var(--accent);
+}
+.press-mark .dot {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: 6px;
+  margin-left: 6px;
+}
+.press-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.press-sub span { display: flex; align-items: center; gap: 8px; }
+.press-sub .sep { color: var(--rule); }
+
+/* PRESS palette swatches */
+.dir-press .sw-ink { background: var(--ink); }
+.dir-press .sw-paper { background: var(--bg); border-color: rgba(0,0,0,0.18); }
+.dir-press .sw-volcanic { background: var(--accent); color: #fff; }
+.dir-press .sw-campo { background: var(--campo); }
+
+/* PRESS type */
+.dir-press .type-block.serif .sample {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 104px;
+  letter-spacing: -0.045em;
+}
+.dir-press .type-block.serif .sample em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 320;
+  color: var(--accent);
+}
+.dir-press .type-block.serif .specimen {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.dir-press .type-block.cond .sample {
+  font-family: var(--font-condensed);
+  font-size: 104px;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+.dir-press .type-block.cond .specimen {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+/* PRESS button */
+.dir-press .btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 18px 28px 17px;
+  font-family: var(--font-condensed);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.2s;
+}
+.dir-press .btn-primary:hover { background: var(--accent); }
+.dir-press .btn-primary .arr {
+  width: 22px; height: 1px; background: currentColor; position: relative;
+}
+.dir-press .btn-primary .arr::after {
+  content: ""; position: absolute; right: 0; top: -3.5px;
+  width: 8px; height: 8px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+.dir-press .btn-row { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.dir-press .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 12px 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+/* PRESS big score */
+.dir-press .big-score {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 168px;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  display: flex;
+  align-items: baseline;
+}
+.dir-press .big-score .unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+.dir-press .score-trend {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* PRESS flag badge */
+.dir-press .flags { display: flex; flex-direction: column; gap: 12px; }
+.dir-press .flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--bg);
+}
+.dir-press .flag .stripe { width: 14px; height: 14px; }
+
+/* PRESS match card */
+.dir-press .match-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 32px;
+  padding: 4px 0;
+  width: 100%;
+}
+.dir-press .match-card .team {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-condensed);
+  font-size: 38px;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+.dir-press .match-card .team.right { justify-content: flex-end; }
+.dir-press .match-card .team .crest {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--ink);
+  position: relative;
+  flex-shrink: 0;
+}
+.dir-press .match-card .vs {
+  text-align: center;
+  min-width: 130px;
+}
+.dir-press .match-card .vs .date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.dir-press .match-card .vs .time {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 320;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.dir-press .match-card .multiplier {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  padding: 4px 8px;
+  letter-spacing: 0.16em;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+/* PRESS DASHBOARD MOCK */
+.mock-frame {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg);
+  border-radius: 44px;
+  padding: 14px;
+  border: 1px solid var(--rule);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.5) inset,
+    0 30px 80px rgba(17,17,13,0.18),
+    0 0 0 1px rgba(17,17,13,0.06);
+}
+.mock-screen {
+  background: var(--bg);
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+}
+.dir-press .mock-screen { background: var(--bg); }
+.mock-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.mock-statusbar .icons { display: flex; gap: 5px; align-items: center; }
+.mock-statusbar .icons .bar { display: inline-block; width: 3px; height: 8px; background: currentColor; }
+
+.dir-press .mock-content { padding: 16px 22px 24px; }
+.dir-press .mock-masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.dir-press .mock-mark {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 360;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.dir-press .mock-mark em { color: var(--accent); font-style: italic; font-variation-settings: "opsz" 144, "wght" 300; }
+.dir-press .mock-mark .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); vertical-align: 4px; margin-left: 2px; }
+.dir-press .mock-userpill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex; align-items: center; gap: 8px;
+}
+.dir-press .mock-userpill .av {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--campo); color: #F0E9D6;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 11px;
+  font-variation-settings: "opsz" 144, "wght" 500;
+}
+
+.dir-press .mock-issueline {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0 16px;
+}
+
+.dir-press .mock-feature {
+  border: 1px solid var(--ink);
+  padding: 14px 16px 16px;
+  margin-bottom: 18px;
+  position: relative;
+}
+.dir-press .mock-feature .kicker {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.dir-press .mock-feature .ft-teams {
+  font-family: var(--font-condensed);
+  font-size: 38px;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.dir-press .mock-feature .ft-teams .x { color: var(--accent); margin: 0 4px; }
+.dir-press .mock-feature .ft-meta {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  margin-top: 10px;
+}
+.dir-press .mock-feature .pred {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+}
+.dir-press .mock-feature .pred-input {
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  padding: 10px 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 420;
+  font-size: 30px;
+  line-height: 1;
+}
+.dir-press .mock-feature .pred-input.fill { background: var(--accent); color: #fff; border-color: var(--accent); }
+.dir-press .mock-feature .pred .x {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.dir-press .mock-feature .ft-cta {
+  width: 100%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 12px;
+  font-family: var(--font-condensed);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+.dir-press .mock-feature .mult-badge {
+  position: absolute;
+  top: -1px; right: -1px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 5px 10px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+}
+
+/* Matchlist in mock */
+.dir-press .mock-section-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 14px 0 8px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+}
+.dir-press .mock-matchrow {
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.dir-press .mock-matchrow .when {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+.dir-press .mock-matchrow .when b { color: var(--ink); display: block; font-size: 11px; font-weight: 600; }
+.dir-press .mock-matchrow .pair {
+  font-family: var(--font-condensed);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.dir-press .mock-matchrow .pair .vs { color: var(--ink-muted); font-size: 11px; margin: 0 5px; }
+.dir-press .mock-matchrow .palp {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  padding: 6px 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.dir-press .mock-matchrow .palp.done { background: var(--ink); color: var(--bg); }
+
+/* Rank widget */
+.dir-press .mock-rank {
+  margin-top: 18px;
+  padding: 14px 14px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+}
+.dir-press .mock-rank .rh {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 8px;
+}
+.dir-press .mock-rank .rrow {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 6px 0;
+}
+.dir-press .mock-rank .rrow .pos {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 18px;
+  line-height: 1;
+}
+.dir-press .mock-rank .rrow.you { color: var(--accent); }
+.dir-press .mock-rank .rrow .name {
+  font-family: var(--font-condensed);
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.dir-press .mock-rank .rrow .pts {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "wght" 360;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   DIRECTION 02 — PITCH (HEXA)
+   ============================================================ */
+.dir-pitch {
+  --ink: #F2F1EC;
+  --ink-muted: rgba(242,241,236,0.55);
+  --bg: #0A0A09;
+  --bg-card: #131311;
+  --bg-deep: #060605;
+  --accent: #D7FF1E;
+  --accent-soft: rgba(215,255,30,0.18);
+  --rule: rgba(242,241,236,0.12);
+  --font-display: 'Big Shoulders Display', sans-serif;
+  --font-condensed: 'Big Shoulders Display', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+.dir-pitch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 1;
+}
+.dir-pitch::after {
+  content: "";
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 60%; height: 60%;
+  background: radial-gradient(circle at 30% 30%, rgba(215,255,30,0.08), transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PITCH wordmark */
+.pitch-mark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(160px, 22vw, 340px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+.pitch-mark .six {
+  color: var(--accent);
+  font-variation-settings: normal;
+}
+.pitch-mark::after {
+  content: "vi";
+  position: absolute;
+  top: 0.05em; right: -0.45em;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  border-left: 1px solid var(--rule);
+  padding-left: 10px;
+  display: none;
+}
+
+.pitch-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 18px;
+}
+.pitch-sub .pip {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* PITCH palette */
+.dir-pitch .sw-pitch { background: var(--bg); border-color: var(--rule); }
+.dir-pitch .sw-bone { background: var(--ink); color: var(--bg) !important; }
+.dir-pitch .sw-bone .role, .dir-pitch .sw-bone .hex { color: rgba(10,10,9,0.6) !important; }
+.dir-pitch .sw-acid { background: var(--accent); color: var(--bg) !important; }
+.dir-pitch .sw-acid .role, .dir-pitch .sw-acid .hex { color: rgba(10,10,9,0.6) !important; }
+.dir-pitch .sw-graphite { background: var(--bg-card); }
+
+/* PITCH type */
+.dir-pitch .type-block.display .sample {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 124px;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  line-height: 0.85;
+}
+.dir-pitch .type-block.display .sample .acid { color: var(--accent); }
+.dir-pitch .type-block.display .specimen {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.dir-pitch .type-block.mono .sample {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 80px;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+.dir-pitch .type-block.mono .specimen {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+/* PITCH button */
+.dir-pitch .btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 18px 26px;
+  font-family: var(--font-condensed);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 2px;
+  transition: filter 0.2s;
+}
+.dir-pitch .btn-primary:hover { filter: brightness(1.1); }
+.dir-pitch .btn-primary .arr {
+  width: 24px; height: 1.5px; background: currentColor; position: relative;
+}
+.dir-pitch .btn-primary .arr::after {
+  content: ""; position: absolute; right: 0; top: -4px;
+  width: 9px; height: 9px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.dir-pitch .btn-row { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.dir-pitch .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  padding: 12px 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+/* PITCH score */
+.dir-pitch .big-score {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 156px;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  display: flex;
+  align-items: baseline;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dir-pitch .big-score .unit {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-left: 14px;
+  text-transform: uppercase;
+}
+.dir-pitch .score-trend {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+/* PITCH flags */
+.dir-pitch .flags { display: flex; flex-direction: column; gap: 12px; }
+.dir-pitch .flag {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--font-condensed);
+  font-weight: 800;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  position: relative;
+  padding-top: 8px;
+  line-height: 1;
+}
+.dir-pitch .flag .bar {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px;
+}
+.dir-pitch .flag .meta {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* PITCH match card */
+.dir-pitch .match-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 28px;
+  align-items: center;
+  width: 100%;
+}
+.dir-pitch .match-card .team {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 42px;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.95;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.dir-pitch .match-card .team.right { justify-content: flex-end; }
+.dir-pitch .match-card .team .crest-bar {
+  width: 4px; height: 38px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.dir-pitch .match-card .team.right .crest-bar { order: 2; }
+.dir-pitch .match-card .vs {
+  text-align: center;
+  min-width: 130px;
+}
+.dir-pitch .match-card .vs .date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.dir-pitch .match-card .vs .time {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dir-pitch .match-card .multiplier {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  letter-spacing: 0.16em;
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+/* PITCH dashboard mock */
+.dir-pitch .mock-frame {
+  background: var(--bg-deep);
+  border: 1px solid var(--rule);
+  box-shadow:
+    0 30px 100px rgba(0,0,0,0.5),
+    0 0 0 1px var(--rule);
+}
+.dir-pitch .mock-screen { background: var(--bg); }
+.dir-pitch .mock-statusbar { color: var(--ink); }
+.dir-pitch .mock-content { padding: 14px 18px 24px; }
+.dir-pitch .mock-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.dir-pitch .mock-mark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.dir-pitch .mock-mark .six { color: var(--accent); }
+.dir-pitch .mock-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dir-pitch .mock-status::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+/* PITCH countdown */
+.dir-pitch .mock-hero {
+  padding: 22px 0 26px;
+  border-bottom: 1px solid var(--rule);
+}
+.dir-pitch .mock-hero .kicker {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+.dir-pitch .mock-hero .kicker .mult {
+  color: var(--accent);
+  font-weight: 700;
+}
+.dir-pitch .mock-hero .matchup {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 38px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  margin-bottom: 14px;
+}
+.dir-pitch .mock-hero .matchup .x { color: var(--accent); margin: 0 3px; }
+.dir-pitch .mock-hero .countdown {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 44px;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.dir-pitch .mock-hero .countdown .sep { color: var(--ink-muted); }
+.dir-pitch .mock-hero .countdown .lbl {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+.dir-pitch .mock-hero .pred-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+.dir-pitch .mock-hero .pred-input {
+  background: var(--bg-deep);
+  border: 1px solid var(--rule);
+  padding: 8px 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dir-pitch .mock-hero .pred-input.fill { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.dir-pitch .mock-hero .pred-row .x { font-family: var(--font-mono); color: var(--ink-muted); font-size: 12px; }
+.dir-pitch .mock-hero .cta {
+  width: 100%;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 12px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  border-radius: 2px;
+}
+
+/* PITCH match list */
+.dir-pitch .mock-section-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 16px 0 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.dir-pitch .mock-section-label .count { color: var(--ink); }
+.dir-pitch .mock-matchrow {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  border-top: 1px solid var(--rule);
+}
+.dir-pitch .mock-matchrow:last-of-type { border-bottom: 1px solid var(--rule); }
+.dir-pitch .mock-matchrow .when {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+.dir-pitch .mock-matchrow .when b { color: var(--ink); display: block; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dir-pitch .mock-matchrow .pair {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+.dir-pitch .mock-matchrow .pair .vs { color: var(--ink-muted); font-size: 12px; margin: 0 6px; font-family: var(--font-mono); font-weight: 400; }
+.dir-pitch .mock-matchrow .palp {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+  padding: 6px 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.dir-pitch .mock-matchrow .palp.done { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+
+/* PITCH rank widget */
+.dir-pitch .mock-rank {
+  margin-top: 18px;
+  padding: 16px 16px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.dir-pitch .mock-rank .rh {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 8px;
+}
+.dir-pitch .mock-rank .rrow {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 0;
+}
+.dir-pitch .mock-rank .rrow .pos {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-muted);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+.dir-pitch .mock-rank .rrow.you .pos { color: var(--accent); }
+.dir-pitch .mock-rank .rrow .name {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 17px;
+  text-transform: uppercase;
+}
+.dir-pitch .mock-rank .rrow.you .name { color: var(--accent); }
+.dir-pitch .mock-rank .rrow .pts {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   DECISION FOOTER
+   ============================================================ */
+.decision {
+  padding: 120px 40px 140px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.decision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.decision-card {
+  border: 1px solid var(--page-rule);
+  padding: 40px;
+  border-radius: 4px;
+  background: #fff;
+}
+.decision-card.press { background: #F0E9D6; border-color: rgba(17,17,13,0.18); }
+.decision-card.pitch { background: #0A0A09; color: #F2F1EC; border-color: rgba(242,241,236,0.12); }
+.decision-card .dc-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+.decision-card .dc-title {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+.decision-card.pitch .dc-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.decision-card .dc-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 24px;
+}
+.decision-card .dc-body {
+  font-family: 'Newsreader', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+.decision-card.pitch .dc-body {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.decision-cta {
+  margin-top: 64px;
+  padding: 40px 0 0;
+  border-top: 1px solid var(--page-rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 32px;
+}
+.decision-cta .ask {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  max-width: 22ch;
+}
+.decision-cta .ask em {
+  font-style: italic;
+  color: #E14816;
+  font-variation-settings: "opsz" 144, "wght" 300;
+}
+.decision-cta .reply {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--page-meta);
+  text-align: right;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .doc-nav { padding: 12px 18px; }
+  .doc-nav-left { gap: 14px; }
+  .cover { padding: 64px 22px 56px; }
+  .cover-meta { grid-template-columns: 1fr 1fr; }
+  .names { padding: 56px 22px 80px; }
+  .names-grid { grid-template-columns: 1fr 1fr; }
+  .section-head { grid-template-columns: 1fr; gap: 16px; }
+  .direction { padding: 80px 22px 100px; }
+  .dir-hero { grid-template-columns: 1fr; gap: 32px; }
+  .palette { grid-template-columns: 1fr 1fr; }
+  .type-stack { grid-template-columns: 1fr; }
+  .comp.span-4, .comp.span-6 { grid-column: span 12; }
+  .decision { padding: 80px 22px 100px; }
+  .decision-grid { grid-template-columns: 1fr; }
+  .decision-cta { flex-direction: column; align-items: flex-start; }
+}
+
+/* Entry animation for cover */
+.cover-title, .cover-lede, .cover-label, .cover-meta {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: rise 0.9s cubic-bezier(0.2,0.7,0.2,1) forwards;
+}
+.cover-label { animation-delay: 0.05s; }
+.cover-title { animation-delay: 0.15s; }
+.cover-lede { animation-delay: 0.3s; }
+.cover-meta { animation-delay: 0.45s; }
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     DOC NAV
+     ============================================================ -->
+<nav class="doc-nav">
+  <div class="doc-nav-left">
+    <span class="crumb">Identidade Visual</span>
+    <a href="#nomes">Nomes</a>
+    <a href="#press">01 · Press</a>
+    <a href="#pitch">02 · Pitch</a>
+    <a href="#decisao">Decisão</a>
+  </div>
+  <div class="doc-nav-right">
+    <span>v1.0 / 03 jun 2026</span>
+    <span class="live">8 dias até a Copa</span>
+  </div>
+</nav>
+
+<!-- ============================================================
+     COVER
+     ============================================================ -->
+<section class="cover">
+  <div class="cover-label">
+    <span class="dot"></span>
+    <span>Proposta · Bolão Copa 2026 · Etapa 01 — Identidade</span>
+  </div>
+  <h1 class="cover-title">Duas direções, <em>cinco nomes</em>, uma escolha.</h1>
+  <p class="cover-lede">
+    Antes de construir o aplicativo, uma decisão de tom. As duas direções abaixo
+    são opostos honestos do mesmo brief — minimalismo esportivo, tipografia forte,
+    uma cor de destaque, espaço pra respirar. Uma fala em voz de revista. A outra
+    em voz de transmissão ao vivo. Escolha uma e a plataforma inteira se alinha.
+  </p>
+  <dl class="cover-meta">
+    <div><dt>Cliente</dt><dd>Galera do Boteco</dd></div>
+    <div><dt>Escopo</dt><dd>Bolão fechado · ~30 pessoas</dd></div>
+    <div><dt>Entrega final</dt><dd>11 jun 2026</dd></div>
+    <div><dt>Stack</dt><dd>Web PWA · Vercel · Supabase</dd></div>
+  </dl>
+</section>
+
+<!-- ============================================================
+     NAMES
+     ============================================================ -->
+<section class="names" id="nomes">
+  <div class="section-head">
+    <div class="section-num">§ 01</div>
+    <div class="section-title-block">
+      <div class="section-eyebrow">Naming · 5 candidatos</div>
+      <h2 class="section-title">Como vamos chamar isso.</h2>
+      <p class="section-deck">
+        Curtos, brasileiros, com swag. Cada um carrega uma vibe diferente —
+        o nome certo é aquele que combina com a direção visual escolhida.
+      </p>
+    </div>
+  </div>
+
+  <div class="names-grid">
+    <div class="name-card">
+      <div class="nc-num">01</div>
+      <div class="name-mark">Tabela</div>
+      <div class="name-pron">/ta·be·la/</div>
+      <p class="name-rationale">
+        Dois sentidos num só nome: a <em>tabelinha</em> entre dois jogadores e a
+        <em>tabela</em> de classificação. O bolão é exatamente o cruzamento dos dois.
+      </p>
+      <div class="name-tag">Recomendado · Press</div>
+    </div>
+
+    <div class="name-card">
+      <div class="nc-num">02</div>
+      <div class="name-mark">Hexa</div>
+      <div class="name-pron">/é·xa/</div>
+      <p class="name-rationale">
+        O sonho de toda a galera. Curto, ambicioso, com energia de
+        contagem regressiva. Funciona bem em logo grande e em loading screen.
+      </p>
+      <div class="name-tag">Recomendado · Pitch</div>
+    </div>
+
+    <div class="name-card">
+      <div class="nc-num">03</div>
+      <div class="name-mark">Trivela</div>
+      <div class="name-pron">/tri·vé·la/</div>
+      <p class="name-rationale">
+        Jeito brasileiro de chutar — e jeito brasileiro de palpitar. Tem prosódia
+        boa, soa premium. Risco: já é nome de revista esportiva consagrada.
+      </p>
+      <div class="name-tag">Alternativo</div>
+    </div>
+
+    <div class="name-card">
+      <div class="nc-num">04</div>
+      <div class="name-mark">Caneta</div>
+      <div class="name-pron">/ca·né·ta/</div>
+      <p class="name-rationale">
+        Drible mais humilhante do futebol. Provoca, é memorável, cabe em ícone.
+        Também combina com o gesto de "anotar" o palpite. Mais informal.
+      </p>
+      <div class="name-tag">Alternativo · Lúdico</div>
+    </div>
+
+    <div class="name-card">
+      <div class="nc-num">05</div>
+      <div class="name-mark">Onze</div>
+      <div class="name-pron">/ón·zi/</div>
+      <p class="name-rationale">
+        Os onze em campo. Minimalismo absoluto, abre espaço pra tipografia
+        gigante. Quase austero. Pra quem quer sobriedade radical.
+      </p>
+      <div class="name-tag">Alternativo · Minimal</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIRECTION 01 — PRESS / TABELA
+     ============================================================ -->
+<section class="direction dir-press" id="press">
+  <div class="direction-inner">
+
+    <div class="direction-marker">
+      <span class="bar"></span>
+      <span>Direção 01</span>
+      <span>·</span>
+      <span>Press</span>
+      <span>·</span>
+      <span>Tabela</span>
+    </div>
+
+    <!-- HERO -->
+    <div class="dir-hero">
+      <div>
+        <div class="press-mark">Tab<em>e</em>la<span class="dot"></span></div>
+        <div class="press-sub">
+          <span>Sup. esportivo</span>
+          <span class="sep">/</span>
+          <span>Cream &amp; ink</span>
+          <span class="sep">/</span>
+          <span>Vol. 01 — Copa</span>
+        </div>
+      </div>
+      <div class="pitch">
+        <p><strong>Suplemento de domingo.</strong> Café preto, jornal dobrado, palpite circulado a caneta. A Tabela é o bolão tratado como matéria editorial — cada rodada é uma edição, cada jogo é uma chamada, o ranking é uma coluna fixa.</p>
+        <p>Fraunces faz o trabalho pesado nos títulos. Anton condensado entra com sotaque esportivo. O laranja vulcânico aparece com parcimônia — em um único título, em um único botão, em um único multiplicador. O resto respira creme.</p>
+        <div class="philosophy">↳ Filosofia · O bolão como suplemento esportivo</div>
+      </div>
+    </div>
+
+    <!-- PALETTE -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">A</span><span class="label">Paleta</span><span class="rule"></span>
+      </div>
+      <div class="palette">
+        <div class="swatch sw-paper light">
+          <div><div class="role">Base · Paper</div></div>
+          <div class="meta-bottom"><div class="name">Creme</div><div class="hex">#F0E9D6</div></div>
+        </div>
+        <div class="swatch sw-ink dark">
+          <div><div class="role">Texto · Ink</div></div>
+          <div class="meta-bottom"><div class="name">Tinta</div><div class="hex">#11110D</div></div>
+        </div>
+        <div class="swatch sw-volcanic dark">
+          <div><div class="role">Acento · 100%</div></div>
+          <div class="meta-bottom"><div class="name">Vulcânico</div><div class="hex">#E14816</div></div>
+        </div>
+        <div class="swatch sw-campo dark">
+          <div><div class="role">Secundário · 20%</div></div>
+          <div class="meta-bottom"><div class="name">Campo</div><div class="hex">#18372A</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">B</span><span class="label">Tipografia</span><span class="rule"></span>
+      </div>
+      <div class="type-stack">
+        <div class="type-block serif">
+          <div class="meta">
+            <span>Display · Fraunces</span><span>Variable · opsz 144</span>
+          </div>
+          <div class="sample">Pal<em>p</em>ite</div>
+          <div class="specimen">
+            Serifa editorial, variável, com optical size pra brilhar em corpos
+            gigantes. Usada em wordmark, manchetes, números de pontuação.
+            O itálico carrega o acento vulcânico nos destaques.
+          </div>
+        </div>
+        <div class="type-block cond">
+          <div class="meta">
+            <span>Condensada · Anton</span><span>Single weight · 400</span>
+          </div>
+          <div class="sample">Brasil 2×</div>
+          <div class="specimen">
+            ANTON ENTRA ONDE O JOGO ACONTECE — TIME, PLACAR, RODADA, MULTIPLICADOR.
+            CONDENSADA, ALTA, SEM DESCULPA. O CONTRAPONTO ESPORTIVO À FRAUNCES.
+            DADOS ESCRITOS EM JETBRAINS MONO.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">C</span><span class="label">Componentes-âncora</span><span class="rule"></span>
+      </div>
+      <div class="comp-grid">
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.01 · Botão</span><span>1 cor · 1 ação</span></div>
+          <div class="comp-body">
+            <div class="btn-row">
+              <button class="btn-primary">Salvar palpite <span class="arr"></span></button>
+              <button class="btn-ghost">Editar</button>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.02 · Pontuação</span><span>Fraunces · Display</span></div>
+          <div class="comp-body">
+            <div style="text-align:center">
+              <div class="big-score">87<span class="unit">pts</span></div>
+              <div class="score-trend">↑ +12 na rodada</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.03 · Bandeira</span><span>Cód · Cor</span></div>
+          <div class="comp-body">
+            <div class="flags">
+              <div class="flag"><span class="stripe" style="background: linear-gradient(to bottom, #009B3A 0 33%, #FFDF00 33% 66%, #002776 66% 100%)"></span>BRA</div>
+              <div class="flag"><span class="stripe" style="background: linear-gradient(to bottom, #fff 0 50%, #FF0000 50% 100%); border:1px solid #11110D"></span>CRO</div>
+              <div class="flag"><span class="stripe" style="background: linear-gradient(to bottom, #75AADB 0 33%, #fff 33% 66%, #75AADB 66% 100%); border:1px solid #11110D"></span>ARG</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-12">
+          <div class="comp-label"><span>C.04 · Card de jogo</span><span>Layout editorial · 3 colunas</span></div>
+          <div class="comp-body">
+            <div class="match-card">
+              <div class="team">
+                <span class="crest" style="background: linear-gradient(135deg, #009B3A 0 50%, #FFDF00 50% 100%)"></span>
+                <span>Brasil</span>
+              </div>
+              <div class="vs">
+                <div class="date">12 jun · Quarta</div>
+                <div class="time">22h</div>
+                <div class="multiplier">Brasil 2×</div>
+              </div>
+              <div class="team right">
+                <span>Croácia</span>
+                <span class="crest" style="background: repeating-linear-gradient(45deg, #FF0000 0 10px, #fff 10px 20px)"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD MOCK -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">D</span><span class="label">Mock · Home (mobile)</span><span class="rule"></span>
+      </div>
+      <div class="mock-frame">
+        <div class="mock-screen">
+          <div class="mock-statusbar">
+            <span>22:14</span>
+            <span class="icons">
+              <span class="bar" style="height:5px"></span>
+              <span class="bar" style="height:7px"></span>
+              <span class="bar" style="height:9px"></span>
+              <span class="bar" style="height:11px"></span>
+              <span>· 5G ·</span>
+              <span>96%</span>
+            </span>
+          </div>
+          <div class="mock-content">
+            <div class="mock-masthead">
+              <div class="mock-mark">Tab<em>e</em>la<span class="dot"></span></div>
+              <div class="mock-userpill">
+                <div class="av">H</div>
+                <span>Henrique</span>
+              </div>
+            </div>
+            <div class="mock-issueline">
+              <span>Edição Nº 01</span>
+              <span>Rodada 01</span>
+              <span>11 jun 2026</span>
+            </div>
+
+            <div class="mock-feature">
+              <div class="mult-badge">Brasil 2×</div>
+              <div class="kicker">↳ Próximo · em 23h 46m</div>
+              <div class="ft-teams">Brasil <span class="x">×</span> Croácia</div>
+              <div class="pred">
+                <div class="pred-input fill">2</div>
+                <div class="x">×</div>
+                <div class="pred-input">1</div>
+              </div>
+              <div class="ft-meta">
+                <span>Artilheiro: Vinícius Jr.</span>
+                <span>Vale 20pts</span>
+              </div>
+              <button class="ft-cta">Confirmar palpite</button>
+            </div>
+
+            <div class="mock-section-label">
+              <span>Próximos jogos</span><span>05 abertos</span>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">11 jun<b>17h</b></div>
+              <div class="pair">MEX <span class="vs">×</span> MAR</div>
+              <a class="palp">Palpitar</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">11 jun<b>20h</b></div>
+              <div class="pair">ESP <span class="vs">×</span> JPN</div>
+              <a class="palp done">✓ 1×0</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">13 jun<b>16h</b></div>
+              <div class="pair">FRA <span class="vs">×</span> USA</div>
+              <a class="palp">Palpitar</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">13 jun<b>21h</b></div>
+              <div class="pair">ARG <span class="vs">×</span> NED</div>
+              <a class="palp">Palpitar</a>
+            </div>
+
+            <div class="mock-rank">
+              <div class="rh"><span>Tabela · Top 4</span><span>+ ver tudo</span></div>
+              <div class="rrow you">
+                <div class="pos">1</div>
+                <div class="name">Henrique</div>
+                <div class="pts">87</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">2</div>
+                <div class="name">Bruno</div>
+                <div class="pts">81</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">3</div>
+                <div class="name">Marina</div>
+                <div class="pts">76</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">4</div>
+                <div class="name">Caio</div>
+                <div class="pts">71</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     DIRECTION 02 — PITCH / HEXA
+     ============================================================ -->
+<section class="direction dir-pitch" id="pitch">
+  <div class="direction-inner">
+
+    <div class="direction-marker">
+      <span class="bar"></span>
+      <span>Direção 02</span>
+      <span>·</span>
+      <span>Pitch</span>
+      <span>·</span>
+      <span>Hexa</span>
+    </div>
+
+    <!-- HERO -->
+    <div class="dir-hero">
+      <div>
+        <div class="pitch-mark">HE<span class="six">X</span>A</div>
+        <div class="pitch-sub">
+          <span class="pip"></span>
+          <span>Late night sportbook</span>
+          <span>·</span>
+          <span>Pitch black + Acid lime</span>
+          <span>·</span>
+          <span>Vol. 01</span>
+        </div>
+      </div>
+      <div class="pitch">
+        <p><strong>Apito final, placar gritando, telão piscando.</strong> A Hexa é o bolão tratado como transmissão ao vivo — sportsbook nervoso, contagem regressiva sempre presente, dado tabular e pulsante.</p>
+        <p>Big Shoulders Display é a megafone — entra grande em time, placar, manchete. JetBrains Mono carrega os números — tempo restante, pontuação, ID do palpite. O verde-ácido é o único sinal: tudo o que importa, importa em lima.</p>
+        <div class="philosophy">↳ Filosofia · O bolão como transmissão ao vivo</div>
+      </div>
+    </div>
+
+    <!-- PALETTE -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">A</span><span class="label">Paleta</span><span class="rule"></span>
+      </div>
+      <div class="palette">
+        <div class="swatch sw-pitch dark">
+          <div><div class="role">Base · Pitch</div></div>
+          <div class="meta-bottom"><div class="name">Gramado Noite</div><div class="hex">#0A0A09</div></div>
+        </div>
+        <div class="swatch sw-graphite dark">
+          <div><div class="role">Card · Graphite</div></div>
+          <div class="meta-bottom"><div class="name">Grafite</div><div class="hex">#131311</div></div>
+        </div>
+        <div class="swatch sw-bone">
+          <div><div class="role">Texto · Bone</div></div>
+          <div class="meta-bottom"><div class="name">Osso</div><div class="hex">#F2F1EC</div></div>
+        </div>
+        <div class="swatch sw-acid">
+          <div><div class="role">Acento · 100%</div></div>
+          <div class="meta-bottom"><div class="name">Acid Lime</div><div class="hex">#D7FF1E</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">B</span><span class="label">Tipografia</span><span class="rule"></span>
+      </div>
+      <div class="type-stack">
+        <div class="type-block display">
+          <div class="meta">
+            <span>Display · Big Shoulders</span><span>Weight 900 · Condensed</span>
+          </div>
+          <div class="sample">BRA <span class="acid">2×</span></div>
+          <div class="specimen">
+            Iconografia esportiva sem permissão. Condensada extrema, peso 900,
+            uppercase by default. Usada em wordmark, times, manchetes, CTA.
+            O acid lime entra como rasgo no meio do tipo.
+          </div>
+        </div>
+        <div class="type-block mono">
+          <div class="meta">
+            <span>Dados · JetBrains Mono</span><span>Weight 700 · Tabular</span>
+          </div>
+          <div class="sample">23:46:09</div>
+          <div class="specimen">
+            Toda métrica é monoespaçada e tabular: pontos, contagem regressiva,
+            placar, hora. JetBrains Mono dá ar de painel de aeroporto + terminal
+            de bolsa. Manrope cuida do corpo de leitura.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">C</span><span class="label">Componentes-âncora</span><span class="rule"></span>
+      </div>
+      <div class="comp-grid">
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.01 · Botão</span><span>Acid lime · CTA</span></div>
+          <div class="comp-body">
+            <div class="btn-row">
+              <button class="btn-primary">Salvar palpite <span class="arr"></span></button>
+              <button class="btn-ghost">Editar</button>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.02 · Pontuação</span><span>Mono · Tabular</span></div>
+          <div class="comp-body">
+            <div style="text-align:center">
+              <div class="big-score">087<span class="unit">pts</span></div>
+              <div class="score-trend">↑ +12 na rodada</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-4">
+          <div class="comp-label"><span>C.03 · Bandeira</span><span>Bar + Cód</span></div>
+          <div class="comp-body">
+            <div class="flags">
+              <div class="flag">
+                <span class="bar" style="background: linear-gradient(90deg, #009B3A 33%, #FFDF00 33% 66%, #002776 66%)"></span>
+                Brasil<span class="meta">BRA · Grupo G</span>
+              </div>
+              <div class="flag">
+                <span class="bar" style="background: linear-gradient(90deg, #FF0000 50%, #fff 50%)"></span>
+                Croácia<span class="meta">CRO · Grupo G</span>
+              </div>
+              <div class="flag">
+                <span class="bar" style="background: linear-gradient(90deg, #75AADB 33%, #fff 33% 66%, #75AADB 66%)"></span>
+                Argentina<span class="meta">ARG · Grupo C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comp span-12">
+          <div class="comp-label"><span>C.04 · Card de jogo</span><span>Layout broadcast · 3 colunas</span></div>
+          <div class="comp-body">
+            <div class="match-card">
+              <div class="team">
+                <span class="crest-bar" style="background:#FFDF00"></span>
+                <span>Brasil</span>
+              </div>
+              <div class="vs">
+                <div class="date">12 jun · 22h00</div>
+                <div class="time">23:46:09</div>
+                <div class="multiplier">Brasil 2×</div>
+              </div>
+              <div class="team right">
+                <span>Croácia</span>
+                <span class="crest-bar" style="background:#FF0000"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD MOCK -->
+    <div class="subsec">
+      <div class="subsec-head">
+        <span class="num">D</span><span class="label">Mock · Home (mobile)</span><span class="rule"></span>
+      </div>
+      <div class="mock-frame">
+        <div class="mock-screen">
+          <div class="mock-statusbar">
+            <span>22:14</span>
+            <span class="icons">
+              <span class="bar" style="height:5px"></span>
+              <span class="bar" style="height:7px"></span>
+              <span class="bar" style="height:9px"></span>
+              <span class="bar" style="height:11px"></span>
+              <span>· 5G ·</span>
+              <span>96%</span>
+            </span>
+          </div>
+          <div class="mock-content">
+            <div class="mock-topbar">
+              <div class="mock-mark">HE<span class="six">X</span>A</div>
+              <div class="mock-status">ao vivo · galera do boteco</div>
+            </div>
+
+            <div class="mock-hero">
+              <div class="kicker">
+                <span>↳ Próximo jogo · BRA × CRO</span>
+                <span class="mult">Brasil 2×</span>
+              </div>
+              <div class="matchup">BRA <span class="x">×</span> CRO</div>
+              <div class="countdown">
+                23<span class="sep">:</span>46<span class="sep">:</span>09<span class="lbl">até o apito</span>
+              </div>
+              <div class="pred-row">
+                <div class="pred-input fill">2</div>
+                <div class="x">×</div>
+                <div class="pred-input">1</div>
+              </div>
+              <button class="cta">Travar palpite</button>
+            </div>
+
+            <div class="mock-section-label">
+              <span>Próximos · 5</span><span class="count">5 abertos</span>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">11 jun<b>17:00</b></div>
+              <div class="pair">MEX <span class="vs">×</span> MAR</div>
+              <a class="palp">Palpitar</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">11 jun<b>20:00</b></div>
+              <div class="pair">ESP <span class="vs">×</span> JPN</div>
+              <a class="palp done">1×0</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">13 jun<b>16:00</b></div>
+              <div class="pair">FRA <span class="vs">×</span> USA</div>
+              <a class="palp">Palpitar</a>
+            </div>
+            <div class="mock-matchrow">
+              <div class="when">13 jun<b>21:00</b></div>
+              <div class="pair">ARG <span class="vs">×</span> NED</div>
+              <a class="palp">Palpitar</a>
+            </div>
+
+            <div class="mock-rank">
+              <div class="rh"><span>Ranking · Top 4</span><span>30 jogadores</span></div>
+              <div class="rrow you">
+                <div class="pos">01</div>
+                <div class="name">Henrique</div>
+                <div class="pts">087</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">02</div>
+                <div class="name">Bruno</div>
+                <div class="pts">081</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">03</div>
+                <div class="name">Marina</div>
+                <div class="pts">076</div>
+              </div>
+              <div class="rrow">
+                <div class="pos">04</div>
+                <div class="name">Caio</div>
+                <div class="pts">071</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     DECISION
+     ============================================================ -->
+<section class="decision" id="decisao">
+  <div class="section-head">
+    <div class="section-num">§ 04</div>
+    <div class="section-title-block">
+      <div class="section-eyebrow">Decisão · Etapa 01 concluída</div>
+      <h2 class="section-title">Escolha um caminho.</h2>
+      <p class="section-deck">
+        Cada direção carrega um nome de cabeça-de-chave, mas qualquer um dos cinco
+        nomes pode ser plugado em qualquer direção. O importante é o tom — depois
+        que você aprovar, a plataforma inteira é construída em cima dele.
+      </p>
+    </div>
+  </div>
+
+  <div class="decision-grid">
+    <div class="decision-card press">
+      <div class="dc-num">Direção 01</div>
+      <h3 class="dc-title">Press · Tabela</h3>
+      <div class="dc-line">Editorial · Cream · Vulcânico</div>
+      <p class="dc-body">
+        Vibe de revista esportiva, cada rodada uma edição. Tipo serifa,
+        muito espaço em branco, cor com parcimônia. Sobriedade premium.
+        Funciona melhor com palpite refletido — uma decisão por vez.
+      </p>
+    </div>
+    <div class="decision-card pitch">
+      <div class="dc-num">Direção 02</div>
+      <h3 class="dc-title">Pitch · Hexa</h3>
+      <div class="dc-line">Sportbook · Pitch black · Acid lime</div>
+      <p class="dc-body">
+        Vibe de transmissão ao vivo, contagem regressiva sempre presente.
+        Condensada extrema, dados monoespaçados, cor elétrica. Energia alta.
+        Funciona melhor com palpite no impulso — todo dia tem jogo.
+      </p>
+    </div>
+  </div>
+
+  <div class="decision-cta">
+    <div class="ask">
+      Qual <em>direção</em> e qual <em>nome</em> fechamos?
+    </div>
+    <div class="reply">
+      ↳ Responda no chat · próxima etapa: construção da plataforma
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
