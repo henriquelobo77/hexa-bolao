@@ -8,6 +8,7 @@ import {
 import { getCurrentMember } from "@/lib/actions/member";
 import { SpecialPickForm } from "@/components/special-pick-form";
 import { teamNames } from "@/lib/fixtures";
+import { scorers } from "@/lib/scorers";
 
 export const dynamic = "force-dynamic";
 
@@ -105,8 +106,11 @@ export default async function EspeciaisPage({ params }: Props) {
           initial={myPick("artilheiro")?.value ?? ""}
           official={officialPick("artilheiro")?.value}
           disabled={!open}
-          placeholder="Nome do jogador..."
-          freeText
+          placeholder="Digita o nome do jogador..."
+          datalist={scorers
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((s) => ({ value: s.name, hint: s.team }))}
         />
       </section>
 

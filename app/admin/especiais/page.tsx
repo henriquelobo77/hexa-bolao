@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/session";
 import { supabaseAdmin } from "@/lib/supabase";
 import { teamNames } from "@/lib/fixtures";
+import { scorers } from "@/lib/scorers";
 import { AdminSpecialResultForm } from "@/components/admin-special-result-form";
 import type { Bolao, ScoringConfig, SpecialResult } from "@/lib/types";
 
@@ -59,7 +60,10 @@ export default async function AdminEspeciaisPage() {
         kind="artilheiro"
         label="Artilheiro"
         initial={find("artilheiro")}
-        freeText
+        datalist={scorers
+          .slice()
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((s) => ({ value: s.name, hint: s.team }))}
       />
       {cfg?.enable_vice && (
         <AdminSpecialResultForm
