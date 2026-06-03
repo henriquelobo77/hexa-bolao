@@ -91,7 +91,7 @@ export function RealtimeRefresh({ bolaoId, serverRenderAt }: Props) {
 
   return (
     <div
-      className={`fixed bottom-24 right-3 z-40 flex flex-col items-end gap-0.5 bg-pitch-deep/90 border border-rule px-2 py-1 text-[9px] font-mono uppercase tracking-[0.16em] ${color}`}
+      className={`fixed bottom-28 right-3 z-40 flex flex-col items-end gap-0.5 bg-pitch-deep/90 border border-rule px-2 py-1 text-[9px] font-mono uppercase tracking-[0.16em] ${color}`}
     >
       <div className="flex items-center gap-1.5">
         <span className={`inline-block w-1.5 h-1.5 rounded-full bg-current ${status === "live" ? "hexa-pulse" : ""}`} />

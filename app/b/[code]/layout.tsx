@@ -27,7 +27,7 @@ export default async function BolaoLayout({ children, params }: Props) {
   });
 
   return (
-    <div className="relative min-h-dvh flex flex-col pb-20">
+    <div className="relative min-h-dvh flex flex-col pb-24">
       <BolaoHeader bolaoName={bolao.name} memberNickname={member.nickname} />
       <main className="flex-1">{children}</main>
       <BolaoNav code={code} />

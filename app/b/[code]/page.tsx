@@ -177,6 +177,52 @@ export default async function BolaoHomePage({ params }: Props) {
           </>
         )}
       </section>
+
+      {/* ATALHOS — regras + convidar + stats */}
+      <section className="grid grid-cols-3 gap-2">
+        <Link
+          href={`/b/${code}/regras`}
+          className="border border-rule p-3 hover:border-acid hover:bg-graphite/40 transition flex flex-col items-start gap-1"
+        >
+          <span className="text-[9px] font-mono uppercase tracking-[0.16em] text-bone-muted">
+            §
+          </span>
+          <span className="font-display text-base font-bold uppercase tracking-tight leading-none">
+            Regras
+          </span>
+          <span className="text-[9px] font-mono uppercase tracking-[0.14em] text-bone-faint leading-tight mt-1">
+            Como pontua
+          </span>
+        </Link>
+        <Link
+          href={`/b/${code}/convidar`}
+          className="border border-rule p-3 hover:border-acid hover:bg-graphite/40 transition flex flex-col items-start gap-1"
+        >
+          <span className="text-[9px] font-mono uppercase tracking-[0.16em] text-bone-muted">
+            +
+          </span>
+          <span className="font-display text-base font-bold uppercase tracking-tight leading-none">
+            Convidar
+          </span>
+          <span className="text-[9px] font-mono uppercase tracking-[0.14em] text-bone-faint leading-tight mt-1">
+            QR · link · zap
+          </span>
+        </Link>
+        <Link
+          href={`/b/${code}/stats`}
+          className="border border-rule p-3 hover:border-acid hover:bg-graphite/40 transition flex flex-col items-start gap-1"
+        >
+          <span className="text-[9px] font-mono uppercase tracking-[0.16em] text-bone-muted">
+            ▤
+          </span>
+          <span className="font-display text-base font-bold uppercase tracking-tight leading-none">
+            Stats
+          </span>
+          <span className="text-[9px] font-mono uppercase tracking-[0.14em] text-bone-faint leading-tight mt-1">
+            Seus números
+          </span>
+        </Link>
+      </section>
     </div>
   );
 }
