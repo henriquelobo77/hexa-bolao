@@ -8,21 +8,21 @@ import { setMemberId, clearMemberId, getMemberId } from "../session";
 import { getBolaoByCode, getMember } from "../queries";
 
 // ============================================================
-// Entrar no bolão (cria/recupera membro, valida PIN, seta cookie)
+// Login: pra quem já tem conta (recupera membro, valida PIN, seta cookie)
 // ============================================================
 
-const joinSchema = z.object({
+const loginSchema = z.object({
   code: z.string().min(3).max(32),
   nickname: z.string().min(1).max(24).trim(),
   pin: z.string().regex(/^\d{4,6}$/, "PIN tem que ser 4 a 6 dígitos"),
 });
 
-export type JoinResult =
+export type AuthResult =
   | { ok: true; bolaoSlug: string }
   | { ok: false; error: string };
 
-export async function joinBolao(formData: FormData): Promise<JoinResult> {
-  const parsed = joinSchema.safeParse({
+export async function loginToBolao(formData: FormData): Promise<AuthResult> {
+  const parsed = loginSchema.safeParse({
     code: formData.get("code"),
     nickname: formData.get("nickname"),
     pin: formData.get("pin"),
@@ -30,9 +30,92 @@ export async function joinBolao(formData: FormData): Promise<JoinResult> {
   if (!parsed.success) {
     return {
       ok: false,
-      error:
-        parsed.error.errors[0]?.message ??
-        "Código, apelido e PIN são obrigatórios.",
+      error: parsed.error.errors[0]?.message ?? "Dados inválidos.",
+    };
+  }
+  const { code, nickname, pin } = parsed.data;
+
+  const bolao = await getBolaoByCode(code);
+  if (!bolao) {
+    return { ok: false, error: "Código do bolão não encontrado." };
+  }
+
+  const admin = supabaseAdmin();
+  const { data: existing } = await admin
+    .from("members")
+    .select("id, pin_hash")
+    .eq("bolao_id", bolao.id)
+    .ilike("nickname", nickname)
+    .maybeSingle<{ id: string; pin_hash: string | null }>();
+
+  if (!existing) {
+    return {
+      ok: false,
+      error: "Apelido não encontrado nesse bolão. Pra entrar pela 1ª vez, vai em CRIAR CONTA.",
+    };
+  }
+
+  let memberId: string;
+
+  if (existing.pin_hash) {
+    const { data: authed, error: authErr } = await admin.rpc("auth_member", {
+      p_bolao_id: bolao.id,
+      p_nickname: nickname,
+      p_pin: pin,
+    });
+    if (authErr) {
+      console.error("[loginToBolao]", authErr);
+      return { ok: false, error: "Falha ao validar." };
+    }
+    if (!authed) return { ok: false, error: "PIN incorreto." };
+    memberId = authed as string;
+  } else {
+    // Membro sem PIN (admin resetou) — adota o que digitou como novo PIN
+    const { error: setErr } = await admin.rpc("set_member_pin", {
+      p_member_id: existing.id,
+      p_new_pin: pin,
+    });
+    if (setErr) return { ok: false, error: "Falha ao definir PIN." };
+    memberId = existing.id;
+  }
+
+  await admin
+    .from("members")
+    .update({ last_seen_at: new Date().toISOString() })
+    .eq("id", memberId);
+
+  await setMemberId(memberId);
+  revalidatePath("/", "layout");
+  return { ok: true, bolaoSlug: bolao.slug };
+}
+
+// ============================================================
+// Criar conta: pra quem é novo (com confirmação de PIN)
+// ============================================================
+
+const signupSchema = z
+  .object({
+    code: z.string().min(3).max(32),
+    nickname: z.string().min(1).max(24).trim(),
+    pin: z.string().regex(/^\d{4,6}$/, "PIN tem que ser 4 a 6 dígitos"),
+    pin_confirm: z.string(),
+  })
+  .refine((d) => d.pin === d.pin_confirm, {
+    message: "Os dois PINs não batem.",
+    path: ["pin_confirm"],
+  });
+
+export async function signupToBolao(formData: FormData): Promise<AuthResult> {
+  const parsed = signupSchema.safeParse({
+    code: formData.get("code"),
+    nickname: formData.get("nickname"),
+    pin: formData.get("pin"),
+    pin_confirm: formData.get("pin_confirm"),
+  });
+  if (!parsed.success) {
+    return {
+      ok: false,
+      error: parsed.error.errors[0]?.message ?? "Dados inválidos.",
     };
   }
   const { code, nickname, pin } = parsed.data;
@@ -44,82 +127,54 @@ export async function joinBolao(formData: FormData): Promise<JoinResult> {
 
   const admin = supabaseAdmin();
 
-  // 1. Checa se já existe membro com esse apelido (case-insensitive)
+  // Verifica que o apelido NÃO existe (evita conta duplicada)
   const { data: existing } = await admin
     .from("members")
-    .select("id, pin_hash")
+    .select("id")
     .eq("bolao_id", bolao.id)
     .ilike("nickname", nickname)
-    .maybeSingle<{ id: string; pin_hash: string | null }>();
-
-  let memberId: string;
+    .maybeSingle<{ id: string }>();
 
   if (existing) {
-    if (existing.pin_hash) {
-      // Membro com PIN definido — valida via RPC
-      const { data: authed, error: authErr } = await admin.rpc("auth_member", {
-        p_bolao_id: bolao.id,
-        p_nickname: nickname,
-        p_pin: pin,
-      });
-      if (authErr) {
-        console.error("[joinBolao] auth_member", authErr);
-        return { ok: false, error: "Falha ao validar PIN." };
-      }
-      if (!authed) {
-        return { ok: false, error: "PIN incorreto." };
-      }
-      memberId = authed as string;
-    } else {
-      // Membro sem PIN (legado ou foi resetado pelo admin) — define agora
-      const { error: setErr } = await admin.rpc("set_member_pin", {
-        p_member_id: existing.id,
-        p_new_pin: pin,
-      });
-      if (setErr) {
-        console.error("[joinBolao] set_member_pin", setErr);
-        return { ok: false, error: "Falha ao definir PIN." };
-      }
-      memberId = existing.id;
-    }
-
-    // Atualiza last_seen
-    await admin
-      .from("members")
-      .update({ last_seen_at: new Date().toISOString() })
-      .eq("id", memberId);
-  } else {
-    // Novo membro — antes valida cap de membros
-    if (bolao.max_members != null) {
-      const { count } = await admin
-        .from("members")
-        .select("*", { count: "exact", head: true })
-        .eq("bolao_id", bolao.id);
-      if ((count ?? 0) >= bolao.max_members) {
-        return { ok: false, error: "Bolão lotado. Fala com o admin." };
-      }
-    }
-
-    // Cria via RPC pra fazer o hash no banco
-    const { data: newId, error: createErr } = await admin.rpc(
-      "create_member_with_pin",
-      {
-        p_bolao_id: bolao.id,
-        p_nickname: nickname,
-        p_pin: pin,
-      }
-    );
-    if (createErr || !newId) {
-      console.error("[joinBolao] create_member_with_pin", createErr);
-      return { ok: false, error: "Não consegui te cadastrar. Tenta de novo." };
-    }
-    memberId = newId as string;
+    return {
+      ok: false,
+      error:
+        "Esse apelido já tá em uso nesse bolão. Se for você, vai em ENTRAR. Senão, escolhe outro.",
+    };
   }
 
-  await setMemberId(memberId);
+  // Cap de membros
+  if (bolao.max_members != null) {
+    const { count } = await admin
+      .from("members")
+      .select("*", { count: "exact", head: true })
+      .eq("bolao_id", bolao.id);
+    if ((count ?? 0) >= bolao.max_members) {
+      return { ok: false, error: "Bolão lotado. Fala com o admin." };
+    }
+  }
+
+  const { data: newId, error: createErr } = await admin.rpc(
+    "create_member_with_pin",
+    {
+      p_bolao_id: bolao.id,
+      p_nickname: nickname,
+      p_pin: pin,
+    }
+  );
+  if (createErr || !newId) {
+    console.error("[signupToBolao]", createErr);
+    return { ok: false, error: "Não consegui te cadastrar. Tenta de novo." };
+  }
+
+  await setMemberId(newId as string);
   revalidatePath("/", "layout");
   return { ok: true, bolaoSlug: bolao.slug };
 }
+
+// Mantém o alias antigo apontando pro login pra não quebrar imports legados
+export const joinBolao = loginToBolao;
+export type JoinResult = AuthResult;
 
 // ============================================================
 // Sair do bolão (limpa cookie)
