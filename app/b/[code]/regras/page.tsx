@@ -58,10 +58,20 @@ export default async function RegrasPage({ params }: Props) {
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule">
           § Por jogo
         </div>
-        <Rule label="Placar exato" value={`${cfg.pts_placar_exato} pts`} note="Acertou home e away exatos" />
-        <Rule label="Empate com placar exato" value={`${cfg.pts_empate_exato} pts`} note="Mais difícil acertar — vale mais" />
+        <Rule label="Placar exato" value={`${cfg.pts_placar_exato} pts`} note="Inclui empate cravado — vale igual" />
         <Rule label="Acertou o vencedor" value={`${cfg.pts_vencedor} pts`} note="Vencedor certo, placar errado" />
         <Rule label="Saldo de gols" value={`+${cfg.pts_saldo} pts`} note="Adicional ao vencedor, se acertar saldo" />
+      </section>
+
+      <section>
+        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule">
+          § Mata-mata
+        </div>
+        <Rule
+          label="Quem passa"
+          value={`+${cfg.pts_quem_passa} pts`}
+          note="Só vale a partir das oitavas. Em empate, escolhe quem avança no pênaltis/prorrogação"
+        />
       </section>
 
       <section>

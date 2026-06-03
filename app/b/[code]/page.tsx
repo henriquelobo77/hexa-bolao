@@ -94,6 +94,10 @@ export default async function BolaoHomePage({ params }: Props) {
                 matchId={nextMatch.id}
                 initialHome={myPred?.home_score ?? null}
                 initialAway={myPred?.away_score ?? null}
+                initialAdvances={myPred?.advances_team_code ?? null}
+                isKnockout={nextMatch.phase !== "grupos"}
+                homeCode={nextMatch.team_home_code}
+                awayCode={nextMatch.team_away_code}
               />
             </div>
           ) : (

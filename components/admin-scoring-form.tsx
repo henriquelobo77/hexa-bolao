@@ -68,10 +68,10 @@ export function AdminScoringForm({ config }: Props) {
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule mb-2">
           § Por jogo
         </div>
-        <Field label="Placar exato" name="pts_placar_exato" value={config.pts_placar_exato} />
-        <Field label="Empate com placar exato" name="pts_empate_exato" value={config.pts_empate_exato} />
+        <Field label="Placar exato (inclui empate cravado)" name="pts_placar_exato" value={config.pts_placar_exato} />
         <Field label="Acertou vencedor" name="pts_vencedor" value={config.pts_vencedor} />
         <Field label="Saldo de gols (adicional)" name="pts_saldo" value={config.pts_saldo} />
+        <Field label="Quem passa (mata-mata)" name="pts_quem_passa" value={config.pts_quem_passa} note="Só vale em fases eliminatórias" />
       </section>
 
       <section>

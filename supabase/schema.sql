@@ -48,9 +48,11 @@ create table if not exists scoring_config (
 
   -- Pontuação por jogo
   pts_placar_exato       int not null default 10,
-  pts_empate_exato       int not null default 12,
   pts_vencedor           int not null default 5,
   pts_saldo              int not null default 3,
+
+  -- Mata-mata: acertar quem avança (vale só em fases eliminatórias)
+  pts_quem_passa         int not null default 5,
 
   -- Multiplicadores
   mult_brasil            numeric not null default 2.0,
@@ -115,6 +117,7 @@ create table if not exists matches (
 
   official_home_score int,
   official_away_score int,
+  official_advances_team_code text,    -- mata-mata: quem passou
   status match_status not null default 'scheduled',
 
   order_index int not null default 0,
@@ -138,6 +141,7 @@ create table if not exists predictions (
   match_id uuid not null references matches(id) on delete cascade,
   home_score int not null check (home_score >= 0),
   away_score int not null check (away_score >= 0),
+  advances_team_code text,                       -- mata-mata: quem o usuário acha que passa
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (member_id, match_id)

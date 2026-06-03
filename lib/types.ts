@@ -22,9 +22,9 @@ export interface Bolao {
 export interface ScoringConfig {
   bolao_id: string;
   pts_placar_exato: number;
-  pts_empate_exato: number;
   pts_vencedor: number;
   pts_saldo: number;
+  pts_quem_passa: number;
   mult_brasil: number;
   mult_oitavas: number;
   mult_quartas: number;
@@ -67,6 +67,7 @@ export interface Match {
   venue: string | null;
   official_home_score: number | null;
   official_away_score: number | null;
+  official_advances_team_code: string | null;
   status: MatchStatus;
   order_index: number;
   created_at: string;
@@ -78,6 +79,7 @@ export interface Prediction {
   match_id: string;
   home_score: number;
   away_score: number;
+  advances_team_code: string | null;
   created_at: string;
   updated_at: string;
 }

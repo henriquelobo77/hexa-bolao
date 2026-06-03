@@ -130,6 +130,10 @@ export default async function JogosPage({ params }: Props) {
                       matchId={m.id}
                       initialHome={pred?.home_score ?? null}
                       initialAway={pred?.away_score ?? null}
+                      initialAdvances={pred?.advances_team_code ?? null}
+                      isKnockout={m.phase !== "grupos"}
+                      homeCode={m.team_home_code}
+                      awayCode={m.team_away_code}
                       compact
                     />
                   ) : (

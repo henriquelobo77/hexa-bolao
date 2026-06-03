@@ -86,7 +86,11 @@ function AdminMatchRow({ match }: { match: Match }) {
         matchId={match.id}
         initialHome={match.official_home_score}
         initialAway={match.official_away_score}
+        initialAdvances={match.official_advances_team_code}
         status={match.status}
+        isKnockout={match.phase !== "grupos"}
+        homeCode={match.team_home_code}
+        awayCode={match.team_away_code}
       />
     </div>
   );

@@ -117,10 +117,32 @@ export function scorePrediction(
   let basePts = 0;
   switch (kind) {
     case "exato":         basePts = cfg.pts_placar_exato; break;
-    case "empate_exato":  basePts = cfg.pts_empate_exato; break;
+    case "empate_exato":  basePts = cfg.pts_placar_exato; break; // mesmo valor de placar exato
     case "saldo":         basePts = cfg.pts_vencedor + cfg.pts_saldo; break;
     case "vencedor":      basePts = cfg.pts_vencedor; break;
     case "errado":        basePts = 0; break;
+  }
+
+  // Mata-mata: quem passa
+  // Se o jogo é fase eliminatória, soma bônus se o usuário acertou
+  // qual seleção avançou (penaltis/prorrogação contam pro oficial).
+  const isKnockout = match.phase !== "grupos";
+  let quemPassaBonus = 0;
+  if (isKnockout && match.official_advances_team_code) {
+    // Predicted advances:
+    //   - se o palpite tem vencedor implícito (não-empate) → o vencedor passa
+    //   - se o palpite é empate → o usuário tem que ter escolhido explicitamente
+    let predictedAdvances: string | null = null;
+    if (prediction.home_score > prediction.away_score) {
+      predictedAdvances = match.team_home_code;
+    } else if (prediction.away_score > prediction.home_score) {
+      predictedAdvances = match.team_away_code;
+    } else {
+      predictedAdvances = prediction.advances_team_code ?? null;
+    }
+    if (predictedAdvances && predictedAdvances === match.official_advances_team_code) {
+      quemPassaBonus = cfg.pts_quem_passa;
+    }
   }
 
   // Multiplicadores (combinam — Brasil 2x na semi 2.5x = 5x)
@@ -144,7 +166,7 @@ export function scorePrediction(
     }
   }
 
-  const total = Math.round(basePts * mult + zebra);
+  const total = Math.round((basePts + quemPassaBonus) * mult + zebra);
 
   return {
     match_id: match.id,

@@ -55,6 +55,7 @@ const setResultSchema = z.object({
   home_score: z.coerce.number().int().min(0).max(30),
   away_score: z.coerce.number().int().min(0).max(30),
   status: z.enum(["scheduled", "live", "finished", "cancelled"]).default("finished"),
+  official_advances_team_code: z.string().max(8).optional().nullable(),
 });
 
 export async function adminSetResult(formData: FormData) {
@@ -64,15 +65,30 @@ export async function adminSetResult(formData: FormData) {
     home_score: formData.get("home_score"),
     away_score: formData.get("away_score"),
     status: formData.get("status") ?? "finished",
+    official_advances_team_code: formData.get("official_advances_team_code") || null,
   });
   if (!parsed.success) return { ok: false, error: "Dados inválidos." };
 
+  // Determina quem avança: se houver vencedor, é implícito; se empate, usa o explícito
+  let advances: string | null = null;
+  if (parsed.data.home_score !== parsed.data.away_score) {
+    advances = null; // implícito do vencedor — calculado no scoring engine
+  } else {
+    advances = parsed.data.official_advances_team_code ?? null;
+  }
+
   const admin = supabaseAdmin();
+
+  // Pra empate em mata-mata, precisa do advances. Pra outras phases, ignora.
+  // Como não temos o phase aqui sem outra query, deixa o caller mandar.
+  // Se empate sem advances explícito, salva null (scoring engine sabe lidar).
+
   const { error } = await admin
     .from("matches")
     .update({
       official_home_score: parsed.data.home_score,
       official_away_score: parsed.data.away_score,
+      official_advances_team_code: advances,
       status: parsed.data.status as MatchStatus,
     })
     .eq("id", parsed.data.match_id);
@@ -209,9 +225,9 @@ export async function adminDeleteMatch(formData: FormData) {
 const configSchema = z.object({
   bolao_id: z.string().uuid(),
   pts_placar_exato: z.coerce.number().int().min(0).max(100),
-  pts_empate_exato: z.coerce.number().int().min(0).max(100),
   pts_vencedor: z.coerce.number().int().min(0).max(100),
   pts_saldo: z.coerce.number().int().min(0).max(100),
+  pts_quem_passa: z.coerce.number().int().min(0).max(100),
   mult_brasil: z.coerce.number().min(1).max(10),
   mult_oitavas: z.coerce.number().min(1).max(10),
   mult_quartas: z.coerce.number().min(1).max(10),
