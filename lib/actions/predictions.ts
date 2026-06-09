@@ -4,8 +4,6 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { supabaseAdmin } from "../supabase";
 import { getMemberId } from "../session";
-import { getMatchById, getScoringConfig } from "../queries";
-import { isPredictionOpen } from "../scoring";
 import type { PickKind } from "../types";
 
 // ============================================================
@@ -36,44 +34,26 @@ export async function savePrediction(formData: FormData): Promise<PredictResult>
   }
   const { match_id, home_score, away_score, advances_team_code } = parsed.data;
 
-  const match = await getMatchById(match_id);
-  if (!match) return { ok: false, error: "Jogo não encontrado." };
-  const cfg = await getScoringConfig(match.bolao_id);
-  if (!cfg) return { ok: false, error: "Configuração do bolão ausente." };
-  if (!isPredictionOpen(match, cfg)) {
-    return { ok: false, error: "Palpites já fechados para esse jogo." };
-  }
-
-  // Mata-mata com palpite de empate exige "quem passa"
-  const isKnockout = match.phase !== "grupos";
-  let advances: string | null = null;
-  if (isKnockout) {
-    if (home_score === away_score) {
-      if (!advances_team_code || ![match.team_home_code, match.team_away_code].includes(advances_team_code)) {
-        return { ok: false, error: "Palpite de empate em mata-mata precisa indicar quem passa." };
-      }
-      advances = advances_team_code;
-    } else if (advances_team_code) {
-      // Validação cruzada: se mandou quem passa explicit mas o palpite tem vencedor,
-      // ignora o explícito (vencedor implícito vence).
-      advances = null;
-    }
-  }
-
+  // 1 round-trip ao Postgres — valida + salva atômico via RPC
   const admin = supabaseAdmin();
-  const { error } = await admin
-    .from("predictions")
-    .upsert(
-      { member_id: memberId, match_id, home_score, away_score, advances_team_code: advances },
-      { onConflict: "member_id,match_id" }
-    );
+  const { error } = await admin.rpc("save_prediction", {
+    p_member_id: memberId,
+    p_match_id: match_id,
+    p_home_score: home_score,
+    p_away_score: away_score,
+    p_advances_team_code: advances_team_code ?? null,
+  });
 
   if (error) {
+    // Mapeia exceções do plpgsql pra mensagens em PT
+    const msg = error.message ?? "";
+    if (msg.includes("Jogo não encontrado")) return { ok: false, error: "Jogo não encontrado." };
+    if (msg.includes("Palpites já fechados")) return { ok: false, error: "Palpites já fechados para esse jogo." };
+    if (msg.includes("mata-mata precisa")) return { ok: false, error: "Palpite de empate em mata-mata precisa indicar quem passa." };
     console.error("[savePrediction]", error);
     return { ok: false, error: "Falha ao salvar palpite." };
   }
 
-  revalidatePath("/b", "layout");
   return { ok: true };
 }
 

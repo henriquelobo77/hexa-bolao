@@ -193,6 +193,16 @@ export interface Database {
         Args: { p_member_id: string };
         Returns: void;
       };
+      save_prediction: {
+        Args: {
+          p_member_id: string;
+          p_match_id: string;
+          p_home_score: number;
+          p_away_score: number;
+          p_advances_team_code?: string | null;
+        };
+        Returns: void;
+      };
     };
     Enums: {
       match_phase: MatchPhase;
