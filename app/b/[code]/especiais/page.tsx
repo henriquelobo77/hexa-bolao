@@ -205,17 +205,31 @@ export default async function EspeciaisPage({ params }: Props) {
             if (kindPicks.length === 0) return null;
             const official = officialPick(kind);
 
-            // Agrupa por valor (case-insensitive)
-            const byValue = new Map<string, string[]>();
+            // Agrupa por valor normalizado (case + acentos + espaços múltiplos).
+            // Mostra a versão "mais bonita" — o palpite com mais votos OU o primeiro.
+            const normalize = (s: string) =>
+              s
+                .normalize("NFD")
+                .replace(/[̀-ͯ]/g, "")
+                .toLowerCase()
+                .replace(/\s+/g, " ")
+                .trim();
+
+            const byValue = new Map<
+              string,
+              { display: string; nicks: string[] }
+            >();
             for (const p of kindPicks) {
-              const key = p.value.trim();
+              const key = normalize(p.value);
               const nick = memberById.get(p.member_id)?.nickname ?? "?";
-              if (!byValue.has(key)) byValue.set(key, []);
-              byValue.get(key)!.push(nick);
+              if (!byValue.has(key)) {
+                byValue.set(key, { display: p.value.trim(), nicks: [] });
+              }
+              byValue.get(key)!.nicks.push(nick);
             }
 
-            const rows = Array.from(byValue.entries())
-              .map(([value, nicks]) => ({ value, nicks }))
+            const rows = Array.from(byValue.values())
+              .map(({ display, nicks }) => ({ value: display, nicks }))
               .sort((a, b) => b.nicks.length - a.nicks.length);
 
             const total = kindPicks.length;
