@@ -210,9 +210,9 @@ export default async function EspeciaisPage({ params }: Props) {
             const normalize = (s: string) =>
               s
                 .normalize("NFD")
-                .replace(/[̀-ͯ]/g, "")
+                .replace(/\p{M}/gu, "") // strip combining accents (Unicode Mark category)
                 .toLowerCase()
-                .replace(/\s+/g, " ")
+                .replace(/\s+/g, " ") // collapse whitespace
                 .trim();
 
             const byValue = new Map<
