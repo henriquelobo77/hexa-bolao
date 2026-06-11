@@ -24,18 +24,21 @@ export async function adminLogin(formData: FormData): Promise<AdminLoginResult> 
   if (!password) return { ok: false, error: "Senha obrigatória." };
 
   const admin = supabaseAdmin();
-  // Compara contra qualquer bolão cuja senha bata (suporta múltiplos bolões)
+  // Compara contra qualquer bolão cuja senha bata.
+  // Importante: usa .limit(1) sem maybeSingle pra não quebrar quando
+  // dois bolões compartilham a mesma senha.
   const { data, error } = await admin
     .from("bolao")
     .select("id, admin_password")
     .eq("admin_password", password)
-    .maybeSingle<{ id: string; admin_password: string }>();
+    .limit(1)
+    .returns<{ id: string; admin_password: string }[]>();
 
   if (error) {
     console.error("[adminLogin]", error);
     return { ok: false, error: "Erro ao validar senha." };
   }
-  if (!data) return { ok: false, error: "Senha incorreta." };
+  if (!data || data.length === 0) return { ok: false, error: "Senha incorreta." };
 
   await setAdmin();
   return { ok: true };
