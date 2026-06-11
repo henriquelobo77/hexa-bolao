@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/session";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getCurrentAdminBolao } from "@/lib/admin-bolao";
 import { buildDailyRecap } from "@/lib/recap";
 import { RecapActions } from "@/components/recap-actions";
 import { dayKeyBR } from "@/lib/date";
-import type { Bolao } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +14,7 @@ interface Props {
 export default async function AdminResumoPage({ searchParams }: Props) {
   if (!(await isAdmin())) redirect("/admin");
 
-  const admin = supabaseAdmin();
-  const { data: bolao } = await admin
-    .from("bolao")
-    .select("*")
-    .limit(1)
-    .maybeSingle<Bolao>();
+  const bolao = await getCurrentAdminBolao();
   if (!bolao) return null;
 
   const sp = await searchParams;
@@ -32,7 +26,7 @@ export default async function AdminResumoPage({ searchParams }: Props) {
     <div className="hexa-container py-8 space-y-6">
       <header>
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
-          ↳ Pra colar no grupo da resenha
+          ↳ Bolão ativo: {bolao.name}
         </div>
         <h1 className="font-display text-4xl md:text-5xl font-extrabold uppercase tracking-tight mt-1">
           Resumo do dia

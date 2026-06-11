@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/session";
 import { supabaseAdmin } from "@/lib/supabase";
+import { getCurrentAdminBolao } from "@/lib/admin-bolao";
 import { AdminRemoveMemberButton } from "@/components/admin-remove-member-button";
 import { AdminResetPinButton } from "@/components/admin-reset-pin-button";
 import { fmtDateTime } from "@/lib/date";
@@ -11,10 +12,12 @@ export const dynamic = "force-dynamic";
 export default async function AdminMembrosPage() {
   if (!(await isAdmin())) redirect("/admin");
 
+  const bolao = await getCurrentAdminBolao();
   const admin = supabaseAdmin();
   const { data: members } = await admin
     .from("members")
     .select("*")
+    .eq("bolao_id", bolao?.id ?? "")
     .order("created_at", { ascending: true })
     .returns<Member[]>();
 
@@ -25,7 +28,10 @@ export default async function AdminMembrosPage() {
     <div className="hexa-container py-8 space-y-6">
       <header>
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
-          ↳ {list.length} membro{list.length === 1 ? "" : "s"} · {withPin} com PIN
+          ↳ Bolão ativo: {bolao?.name ?? "—"}
+        </div>
+        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
+          {list.length} membro{list.length === 1 ? "" : "s"} · {withPin} com PIN
         </div>
         <h1 className="font-display text-5xl font-extrabold uppercase tracking-tight mt-1">
           Membros

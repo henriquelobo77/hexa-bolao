@@ -1,23 +1,20 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/session";
 import { supabaseAdmin } from "@/lib/supabase";
+import { getCurrentAdminBolao } from "@/lib/admin-bolao";
 import { teamNames } from "@/lib/fixtures";
 import { scorers } from "@/lib/scorers";
 import { AdminSpecialResultForm } from "@/components/admin-special-result-form";
-import type { Bolao, ScoringConfig, SpecialResult } from "@/lib/types";
+import type { ScoringConfig, SpecialResult } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminEspeciaisPage() {
   if (!(await isAdmin())) redirect("/admin");
 
-  const admin = supabaseAdmin();
-  const { data: bolao } = await admin
-    .from("bolao")
-    .select("*")
-    .limit(1)
-    .maybeSingle<Bolao>();
+  const bolao = await getCurrentAdminBolao();
   if (!bolao) return null;
+  const admin = supabaseAdmin();
   const { data: cfg } = await admin
     .from("scoring_config")
     .select("*")
@@ -41,7 +38,7 @@ export default async function AdminEspeciaisPage() {
     <div className="hexa-container py-8 space-y-6">
       <header>
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
-          ↳ Bolão: {bolao.name}
+          ↳ Bolão ativo: {bolao.name}
         </div>
         <h1 className="font-display text-5xl font-extrabold uppercase tracking-tight mt-1">
           Especiais (oficial)

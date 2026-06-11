@@ -4,7 +4,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { supabaseAdmin } from "../supabase";
-import { isAdmin, setAdmin, clearAdmin } from "../session";
+import {
+  isAdmin,
+  setAdmin,
+  clearAdmin,
+  setActiveBolaoId,
+  clearActiveBolaoId,
+} from "../session";
 import type { PickKind, MatchStatus } from "../types";
 
 // ============================================================
@@ -46,7 +52,20 @@ export async function adminLogin(formData: FormData): Promise<AdminLoginResult> 
 
 export async function adminLogout() {
   await clearAdmin();
+  await clearActiveBolaoId();
   redirect("/admin");
+}
+
+// ============================================================
+// Selecionar bolão ativo (qual o admin tá gerenciando)
+// ============================================================
+
+export async function adminSelectBolao(formData: FormData): Promise<void> {
+  if (!(await isAdmin())) return;
+  const id = String(formData.get("bolao_id") ?? "");
+  if (!id) return;
+  await setActiveBolaoId(id);
+  redirect("/admin/dashboard");
 }
 
 // ============================================================

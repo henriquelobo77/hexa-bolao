@@ -53,3 +53,30 @@ export async function clearAdmin(): Promise<void> {
   const c = await cookies();
   c.delete(ADMIN_COOKIE);
 }
+
+// ------------------------------------------------------------
+// Bolão ativo do admin (qual bolão ele tá gerenciando)
+// ------------------------------------------------------------
+
+const ACTIVE_BOLAO_COOKIE = "hexa_active_bolao";
+
+export async function getActiveBolaoId(): Promise<string | null> {
+  const c = await cookies();
+  return c.get(ACTIVE_BOLAO_COOKIE)?.value ?? null;
+}
+
+export async function setActiveBolaoId(id: string): Promise<void> {
+  const c = await cookies();
+  c.set(ACTIVE_BOLAO_COOKIE, id, {
+    maxAge: 60 * 60 * 8, // mesma duração da sessão admin
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+  });
+}
+
+export async function clearActiveBolaoId(): Promise<void> {
+  const c = await cookies();
+  c.delete(ACTIVE_BOLAO_COOKIE);
+}

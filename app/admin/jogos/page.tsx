@@ -1,26 +1,24 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/session";
 import { supabaseAdmin } from "@/lib/supabase";
+import { getCurrentAdminBolao } from "@/lib/admin-bolao";
 import { fmtDayMonth, fmtTime } from "@/lib/date";
 import { AdminResultForm } from "@/components/admin-result-form";
 import { AdminMatchEdit } from "@/components/admin-match-edit";
 import { AdminMatchAdd } from "@/components/admin-match-add";
-import type { Bolao, Match } from "@/lib/types";
+import type { Match } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminJogosPage() {
   if (!(await isAdmin())) redirect("/admin");
 
+  const bolao = await getCurrentAdminBolao();
   const admin = supabaseAdmin();
-  const { data: bolao } = await admin
-    .from("bolao")
-    .select("*")
-    .limit(1)
-    .maybeSingle<Bolao>();
   const { data: matches } = await admin
     .from("matches")
     .select("*")
+    .eq("bolao_id", bolao?.id ?? "")
     .order("kickoff_at", { ascending: true })
     .returns<Match[]>();
 
@@ -33,7 +31,10 @@ export default async function AdminJogosPage() {
       <header className="flex items-end justify-between gap-4 flex-wrap">
         <div>
           <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
-            ↳ {list.length} partidas · {finished.length} finalizadas
+            ↳ Bolão ativo: {bolao?.name ?? "—"}
+          </div>
+          <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted">
+            {list.length} partidas · {finished.length} finalizadas
           </div>
           <h1 className="font-display text-5xl font-extrabold uppercase tracking-tight mt-1">
             Jogos
