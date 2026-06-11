@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "../supabase";
 import { isAdmin } from "../session";
 import { fetchAllMatches, mapMatches, FootballApiError } from "../football-api";
+import { safeSyncMatches } from "../safe-sync";
 
 // ============================================================
 // Sync com football-data.org disparado pelo painel admin
@@ -53,23 +54,17 @@ export async function adminSyncMatches(formData: FormData): Promise<SyncResult> 
     if (error) return { ok: false, error: `Reset falhou: ${error.message}` };
   }
 
-  const rows = mapped.map((m) => ({ ...m, bolao_id: bolao.id }));
-  const BATCH = 50;
-  for (let i = 0; i < rows.length; i += BATCH) {
-    const batch = rows.slice(i, i + BATCH);
-    const { error } = await supabase
-      .from("matches")
-      .upsert(batch, { onConflict: "bolao_id,external_id" });
-    if (error) {
-      return { ok: false, error: `Upsert falhou: ${error.message}` };
-    }
+  // Usa safeSyncMatches — NUNCA sobrescreve placar de jogo já finalizado
+  const result = await safeSyncMatches(supabase, bolao.id, mapped);
+  if (result.error) {
+    return { ok: false, error: `Upsert falhou: ${result.error}` };
   }
 
   revalidatePath("/", "layout");
   return {
     ok: true,
-    processed: rows.length,
-    finished: mapped.filter((m) => m.status === "finished").length,
-    live: mapped.filter((m) => m.status === "live").length,
+    processed: result.processed,
+    finished: result.finished,
+    live: result.live,
   };
 }

@@ -1,21 +1,24 @@
 // ============================================================
 // HEXA · Cron endpoint
 // ------------------------------------------------------------
-// Disparado pelo Vercel Cron (vercel.json) num intervalo regular
+// Disparado pelo cron-job.org (e/ou Vercel Cron) periodicamente
 // pra puxar resultados da football-data.org.
 //
-// Auth: Vercel envia `Authorization: Bearer ${CRON_SECRET}`.
+// Auth: header `Authorization: Bearer ${CRON_SECRET}`.
+//
+// Importante: usa safeSyncMatches — NUNCA sobrescreve placar
+// de jogo já finalizado, mesmo se a API esportiva flutuar.
 // ============================================================
 
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { fetchAllMatches, mapMatches, FootballApiError } from "@/lib/football-api";
+import { safeSyncMatches } from "@/lib/safe-sync";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-  // Verifica autorização (Vercel manda o secret automaticamente)
   const auth = request.headers.get("authorization");
   const expected = `Bearer ${process.env.CRON_SECRET ?? ""}`;
   if (!process.env.CRON_SECRET || auth !== expected) {
@@ -43,27 +46,20 @@ export async function GET(request: Request) {
   try {
     const apiMatches = await fetchAllMatches(token);
     const mapped = mapMatches(apiMatches);
-    const rows = mapped.map((m) => ({ ...m, bolao_id: bolao.id }));
 
-    const BATCH = 50;
-    for (let i = 0; i < rows.length; i += BATCH) {
-      const batch = rows.slice(i, i + BATCH);
-      const { error } = await supabase
-        .from("matches")
-        .upsert(batch, { onConflict: "bolao_id,external_id" });
-      if (error) {
-        return NextResponse.json(
-          { ok: false, error: error.message },
-          { status: 500 }
-        );
-      }
+    const result = await safeSyncMatches(supabase, bolao.id, mapped);
+    if (result.error) {
+      return NextResponse.json(
+        { ok: false, error: result.error },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
       ok: true,
-      processed: rows.length,
-      finished: mapped.filter((m) => m.status === "finished").length,
-      live: mapped.filter((m) => m.status === "live").length,
+      processed: result.processed,
+      finished: result.finished,
+      live: result.live,
       at: new Date().toISOString(),
     });
   } catch (e) {
