@@ -149,10 +149,10 @@ export function scorePrediction(
   const mult = brasilMultiplier(match, cfg) * phaseMultiplier(match, cfg);
   let zebra = 0;
 
-  // Bônus zebra: se cravou o placar exato e no máximo N pessoas (padrão 1) o acertaram
+  // Bônus zebra: se cravou o placar exato (incluindo empate) e no máximo N pessoas (padrão 1) o acertaram
   if (
     cfg.bonus_zebra_enabled &&
-    kind === "exato" &&
+    (kind === "exato" || kind === "empate_exato") &&
     distribution
   ) {
     const hit = distribution.find(
