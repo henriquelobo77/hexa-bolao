@@ -251,6 +251,7 @@ const configSchema = z.object({
   pts_saldo: z.coerce.number().int().min(0).max(100),
   pts_quem_passa: z.coerce.number().int().min(0).max(100),
   mult_brasil: z.coerce.number().min(1).max(10),
+  mult_r32: z.coerce.number().min(1).max(10),
   mult_oitavas: z.coerce.number().min(1).max(10),
   mult_quartas: z.coerce.number().min(1).max(10),
   mult_semi: z.coerce.number().min(1).max(10),

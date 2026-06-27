@@ -26,6 +26,7 @@ export interface ScoringConfig {
   pts_saldo: number;
   pts_quem_passa: number;
   mult_brasil: number;
+  mult_r32: number;
   mult_oitavas: number;
   mult_quartas: number;
   mult_semi: number;

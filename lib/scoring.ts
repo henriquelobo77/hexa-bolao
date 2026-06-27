@@ -50,6 +50,7 @@ function classifyPrediction(
 
 function phaseMultiplier(match: Match, cfg: ScoringConfig): number {
   switch (match.phase) {
+    case "r32":     return cfg.mult_r32;
     case "oitavas": return cfg.mult_oitavas;
     case "quartas": return cfg.mult_quartas;
     case "semi":    return cfg.mult_semi;
@@ -59,6 +60,8 @@ function phaseMultiplier(match: Match, cfg: ScoringConfig): number {
 }
 
 function brasilMultiplier(match: Match, cfg: ScoringConfig): number {
+  // Brasil 2× só vale na fase de grupos — mata-mata usa só mult de fase
+  if (match.phase !== "grupos") return 1;
   if (match.team_home_code === "BRA" || match.team_away_code === "BRA") {
     return cfg.mult_brasil;
   }

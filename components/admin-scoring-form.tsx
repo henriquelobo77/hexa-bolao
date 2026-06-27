@@ -78,7 +78,8 @@ export function AdminScoringForm({ config }: Props) {
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule mb-2">
           § Multiplicadores
         </div>
-        <Field label="Jogos do Brasil" name="mult_brasil" value={config.mult_brasil} step="0.1" />
+        <Field label="Jogos do Brasil" name="mult_brasil" value={config.mult_brasil} step="0.1" note="Só vale na fase de grupos" />
+        <Field label="Round of 32" name="mult_r32" value={config.mult_r32} step="0.05" />
         <Field label="Oitavas" name="mult_oitavas" value={config.mult_oitavas} step="0.1" />
         <Field label="Quartas" name="mult_quartas" value={config.mult_quartas} step="0.1" />
         <Field label="Semifinal" name="mult_semi" value={config.mult_semi} step="0.1" />

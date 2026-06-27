@@ -56,6 +56,7 @@ create table if not exists scoring_config (
 
   -- Multiplicadores
   mult_brasil            numeric not null default 2.0,
+  mult_r32               numeric not null default 1.0,
   mult_oitavas           numeric not null default 1.5,
   mult_quartas           numeric not null default 2.0,
   mult_semi              numeric not null default 2.5,
