@@ -127,25 +127,21 @@ export function scorePrediction(
   }
 
   // Mata-mata: quem passa
-  // Se o jogo é fase eliminatória, soma bônus se o usuário acertou
-  // qual seleção avançou (penaltis/prorrogação contam pro oficial).
+  // Placar oficial = resultado dos 120 minutos (90' + prorrogação se houve).
+  // Bônus "quem passa" só vale quando o jogo foi DECIDIDO NOS PÊNALTIS
+  // (= placar oficial empate). Em jogo definido em 90'/120', o vencedor
+  // já é claro e o palpite ganha pelos pontos de vencedor/placar normais.
   const isKnockout = match.phase !== "grupos";
+  const wentToPenalties =
+    match.official_home_score === match.official_away_score;
   let quemPassaBonus = 0;
-  if (isKnockout && match.official_advances_team_code) {
-    // Predicted advances:
-    //   - se o palpite tem vencedor implícito (não-empate) → o vencedor passa
-    //   - se o palpite é empate → o usuário tem que ter escolhido explicitamente
-    let predictedAdvances: string | null = null;
-    if (prediction.home_score > prediction.away_score) {
-      predictedAdvances = match.team_home_code;
-    } else if (prediction.away_score > prediction.home_score) {
-      predictedAdvances = match.team_away_code;
-    } else {
-      predictedAdvances = prediction.advances_team_code ?? null;
-    }
-    if (predictedAdvances && predictedAdvances === match.official_advances_team_code) {
-      quemPassaBonus = cfg.pts_quem_passa;
-    }
+  if (
+    isKnockout &&
+    wentToPenalties &&
+    match.official_advances_team_code &&
+    prediction.advances_team_code === match.official_advances_team_code
+  ) {
+    quemPassaBonus = cfg.pts_quem_passa;
   }
 
   // Multiplicadores (combinam — Brasil 2x na semi 2.5x = 5x)

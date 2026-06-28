@@ -70,15 +70,25 @@ export default async function RegrasPage({ params }: Props) {
         <Rule
           label="Quem passa"
           value={`+${cfg.pts_quem_passa} pts`}
-          note="Só vale a partir das oitavas. Em empate, escolhe quem avança no pênaltis/prorrogação"
+          note="A partir dos 16 avos. Só vale em jogos decididos nos pênaltis — acerte quem avançou na disputa."
         />
+        <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-bone-muted mt-3 leading-relaxed">
+          ↳ Placar oficial = resultado dos 120 minutos (90′ + prorrogação, se houver).<br />
+          ↳ Se foi 1×1 nos 90′ e virou 2×1 na prorrogação, vale 2×1.<br />
+          ↳ Se foi empate nos 120′ → vai pros pênaltis, e o palpite &quot;quem passa&quot; decide.
+        </div>
       </section>
 
       <section>
         <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted pb-2 border-b border-rule">
           § Multiplicadores
         </div>
-        <Rule label="Jogos do Brasil" value={`${cfg.mult_brasil}×`} note="Brasil em campo dobra (ou mais)" />
+        <Rule
+          label="Jogos do Brasil"
+          value={`${cfg.mult_brasil}×`}
+          note="Só vale na fase de grupos. No mata-mata, sem bônus extra."
+        />
+        <Rule label="16 avos de final" value={`${cfg.mult_r32}×`} />
         <Rule label="Oitavas de final" value={`${cfg.mult_oitavas}×`} />
         <Rule label="Quartas de final" value={`${cfg.mult_quartas}×`} />
         <Rule label="Semifinal" value={`${cfg.mult_semi}×`} />
