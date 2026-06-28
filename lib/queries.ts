@@ -146,10 +146,12 @@ export async function getMember(memberId: string): Promise<Member | null> {
 export const getPredictionsForBolao = cache(async (bolaoId: string): Promise<Prediction[]> => {
   const supabase = await supabaseServer();
   // join via match.bolao_id — Supabase suporta filtros em relações
+  // .range(0, 99999) sobrescreve o limite default de 1000 do Supabase REST
   const { data } = await supabase
     .from("predictions")
     .select("*, match:matches!inner(bolao_id)")
     .eq("match.bolao_id", bolaoId)
+    .range(0, 99999)
     .returns<(Prediction & { match: { bolao_id: string } })[]>();
   return (data ?? []).map(({ match: _m, ...p }) => p as Prediction);
 });
@@ -160,6 +162,7 @@ export const getPredictionsForMember = cache(async (memberId: string): Promise<P
     .from("predictions")
     .select("*")
     .eq("member_id", memberId)
+    .range(0, 9999)
     .returns<Prediction[]>();
   return data ?? [];
 });
@@ -209,6 +212,7 @@ export const getPredictionDistribution = cache(
       .from("prediction_distribution")
       .select("*, match:matches!inner(bolao_id)")
       .eq("match.bolao_id", bolaoId)
+      .range(0, 99999)
       .returns<(PredictionDistribution & { match: { bolao_id: string } })[]>();
     return (data ?? []).map(({ match: _m, ...d }) => d as PredictionDistribution);
   }
