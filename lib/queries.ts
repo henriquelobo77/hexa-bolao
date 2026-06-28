@@ -145,15 +145,25 @@ export async function getMember(memberId: string): Promise<Member | null> {
 
 export const getPredictionsForBolao = cache(async (bolaoId: string): Promise<Prediction[]> => {
   const supabase = await supabaseServer();
-  // join via match.bolao_id — Supabase suporta filtros em relações
-  // .range(0, 99999) sobrescreve o limite default de 1000 do Supabase REST
-  const { data } = await supabase
-    .from("predictions")
-    .select("*, match:matches!inner(bolao_id)")
-    .eq("match.bolao_id", bolaoId)
-    .range(0, 99999)
-    .returns<(Prediction & { match: { bolao_id: string } })[]>();
-  return (data ?? []).map(({ match: _m, ...p }) => p as Prediction);
+  // PostgREST tem cap server-side em 1000 linhas por response — paginar pra
+  // pegar tudo. join via match.bolao_id pra filtrar por bolão.
+  const PAGE_SIZE = 1000;
+  const out: Prediction[] = [];
+  for (let offset = 0; ; offset += PAGE_SIZE) {
+    const { data } = await supabase
+      .from("predictions")
+      .select("*, match:matches!inner(bolao_id)")
+      .eq("match.bolao_id", bolaoId)
+      .range(offset, offset + PAGE_SIZE - 1)
+      .returns<(Prediction & { match: { bolao_id: string } })[]>();
+    if (!data || data.length === 0) break;
+    for (const row of data) {
+      const { match: _m, ...p } = row;
+      out.push(p as Prediction);
+    }
+    if (data.length < PAGE_SIZE) break;
+  }
+  return out;
 });
 
 export const getPredictionsForMember = cache(async (memberId: string): Promise<Prediction[]> => {
